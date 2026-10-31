@@ -1,0 +1,984 @@
+{
+  "sobre": "Pacientes e notas inventados. Formato das respostas da API de evoluções do Bedside em 28/10/2026. As notas usam o formato de blocos do editor (BlockNote): paragraph, bulletListItem e os blocos próprios sectionHeader, vitals, dictation e calcResult. Datas em UTC; o app mostra no horário de São Paulo.",
+  "lista": [
+    {
+      "id": "maria",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-24T22:10:00Z",
+      "archived_at": null,
+      "patient_name": "Maria Aparecida dos Santos Oliveira",
+      "patient_initials": "M.A.S.O.",
+      "patient_age": 78,
+      "patient_sex": "F",
+      "patient_bed": "412B",
+      "patient_record": "2024118734",
+      "context": "enfermaria",
+      "updated_at": "2026-10-28T10:40:00Z",
+      "last_note_at": "2026-10-28T10:40:00Z",
+      "last_note_locked_at": null
+    },
+    {
+      "id": "francisco",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_name": "Francisco de Assis Nascimento",
+      "patient_age": 82,
+      "patient_sex": "M",
+      "patient_bed": "410A",
+      "context": "enfermaria",
+      "updated_at": "2026-10-28T11:22:00Z",
+      "last_note_at": "2026-10-28T11:22:00Z",
+      "last_note_locked_at": null
+    },
+    {
+      "id": "jrs",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_initials": "J.R.S.",
+      "patient_age": 54,
+      "patient_sex": "M",
+      "patient_bed": "UTI 7",
+      "context": "uti",
+      "updated_at": "2026-10-28T09:15:00Z",
+      "last_note_at": "2026-10-28T09:15:00Z",
+      "last_note_locked_at": null
+    },
+    {
+      "id": "antonio",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_name": "Antônio Carlos Ferreira",
+      "patient_age": 66,
+      "patient_sex": "M",
+      "patient_bed": "305A",
+      "patient_record": "2026093310",
+      "context": "enfermaria",
+      "updated_at": "2026-10-28T10:31:00Z",
+      "last_note_at": "2026-10-28T10:05:00Z",
+      "last_note_locked_at": "2026-10-28T10:31:00Z"
+    },
+    {
+      "id": "luana",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-28T12:05:00Z",
+      "archived_at": null,
+      "patient_name": "Luana Beatriz Moreira Costa",
+      "patient_age": 31,
+      "patient_sex": "F",
+      "context": "ps",
+      "updated_at": "2026-10-28T12:05:00Z",
+      "last_note_at": null,
+      "last_note_locked_at": null
+    },
+    {
+      "id": "helena",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_name": "Helena Prado",
+      "patient_age": 45,
+      "patient_sex": "F",
+      "patient_bed": "401",
+      "context": "enfermaria",
+      "updated_at": "2026-10-27T20:02:00Z",
+      "last_note_at": "2026-10-27T19:40:00Z",
+      "last_note_locked_at": "2026-10-27T20:02:00Z"
+    },
+    {
+      "id": "roberto",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": "2026-10-22T15:00:00Z",
+      "patient_name": "Roberto Siqueira Lima",
+      "patient_age": 59,
+      "patient_sex": "M",
+      "patient_bed": "402B",
+      "context": "enfermaria",
+      "updated_at": "2026-10-21T13:30:00Z",
+      "last_note_at": "2026-10-21T13:00:00Z",
+      "last_note_locked_at": "2026-10-21T13:30:00Z"
+    }
+  ],
+  "evolucoes": {
+    "maria": {
+      "id": "maria",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-24T22:10:00Z",
+      "archived_at": null,
+      "patient_name": "Maria Aparecida dos Santos Oliveira",
+      "patient_initials": "M.A.S.O.",
+      "patient_age": 78,
+      "patient_sex": "F",
+      "patient_bed": "412B",
+      "patient_record": "2024118734",
+      "context": "enfermaria",
+      "notes": [
+        {
+          "id": "n-maria-4",
+          "evolution_id": "maria",
+          "content": [
+            {
+              "id": "b1",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b2",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "D5 de internação por pneumonia adquirida na comunidade em paciente com DPOC GOLD 3. D4 de ceftriaxona 1 g 12/12h e azitromicina 500 mg/dia (D4 de 5). Refere melhora da falta de ar; tosse ainda produtiva, com expectoração amarelada em menor quantidade. Aceitou a dieta pastosa, diurese presente, evacuou ontem. Nega dor torácica. Dormiu bem, sem dessaturação à noite segundo a enfermagem.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b3",
+              "type": "dictation",
+              "props": {
+                "transcribed_text": "Paciente conta que a falta de ar melhorou bastante desde ontem e que conseguiu ir ao banheiro andando, com a fisioterapeuta, sem precisar parar no caminho."
+              },
+              "children": []
+            },
+            {
+              "id": "b4",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Sinais vitais",
+                "icon": "vitals"
+              },
+              "children": []
+            },
+            {
+              "id": "b5",
+              "type": "vitals",
+              "props": {
+                "pa": "128 x 76",
+                "fc": "88",
+                "fr": "20",
+                "sat_o2": "93 (CN 2 L/min)",
+                "temperatura": "36,8",
+                "dor": "2"
+              },
+              "children": []
+            },
+            {
+              "id": "b6",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Exame físico",
+                "icon": "physical_exam"
+              },
+              "children": []
+            },
+            {
+              "id": "b7",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "BEG, corada, hidratada, acianótica, anictérica. Eupneica em cateter nasal a 2 L/min. Lúcida e orientada no tempo e no espaço.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b8",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "AR: MV presente bilateralmente, estertores crepitantes em base direita, menos audíveis que ontem. Sibilos expiratórios esparsos.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b9",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "ACV: RCR 2T, BNF, sem sopros. Abdome: flácido, indolor, RHA presentes. MMII: sem edema, panturrilhas livres.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b10",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Exames complementares",
+                "icon": "complementary"
+              },
+              "children": []
+            },
+            {
+              "id": "b11",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "LAB (28/10): Hb 11,2 | Leuco 9.800 | Plaq 312 | PCR 6,4 | Ur 41 | Cr 1,0 | Na 137 | K 4,0",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b12",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "RX de tórax (27/10): redução da consolidação em base direita, sem derrame.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b13",
+              "type": "calcResult",
+              "props": {
+                "calc_id": "curb65",
+                "label": "CURB-65 (Gravidade de Pneumonia)",
+                "captured_text": "Pontuação: 1 (idade ≥ 65 anos)\nMortalidade em 30 dias: 2,7%\nRisco baixo"
+              },
+              "children": []
+            },
+            {
+              "id": "b14",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Conduta",
+                "icon": "plan"
+              },
+              "children": []
+            },
+            {
+              "id": "b15",
+              "type": "bulletListItem",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Manter ceftriaxona, completar 7 dias (até 31/10).",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b16",
+              "type": "bulletListItem",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Suspender azitromicina amanhã, ao fim do 5º dia.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b17",
+              "type": "bulletListItem",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Reduzir O2 com alvo de SatO2 entre 88 e 92%.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b18",
+              "type": "bulletListItem",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Fisioterapia respiratória duas vezes ao dia.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b19",
+              "type": "bulletListItem",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Programar alta para 30/10 se mantiver a melhora.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-28T10:40:00Z",
+          "updated_at": "2026-10-28T10:40:00Z",
+          "locked_at": null
+        },
+        {
+          "id": "n-maria-3",
+          "evolution_id": "maria",
+          "content": [
+            {
+              "id": "b20",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b21",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "D4 de internação. D3 de ceftriaxona e azitromicina. Afebril há 36 horas. Refere menos cansaço, ainda com tosse produtiva. Aceitando bem a dieta.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b22",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Sinais vitais",
+                "icon": "vitals"
+              },
+              "children": []
+            },
+            {
+              "id": "b23",
+              "type": "vitals",
+              "props": {
+                "pa": "132 x 80",
+                "fc": "94",
+                "fr": "22",
+                "sat_o2": "92 (CN 3 L/min)",
+                "temperatura": "37,1",
+                "dor": "3"
+              },
+              "children": []
+            },
+            {
+              "id": "b24",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Exame físico",
+                "icon": "physical_exam"
+              },
+              "children": []
+            },
+            {
+              "id": "b25",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "REG, corada, hidratada. Taquipneica leve em cateter nasal a 3 L/min. AR: estertores crepitantes em base direita, sibilos difusos.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b26",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Exames complementares",
+                "icon": "complementary"
+              },
+              "children": []
+            },
+            {
+              "id": "b27",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "LAB (27/10): Hb 11,4 | Leuco 11.200 | Plaq 301 | PCR 9,1 | Ur 48 | Cr 1,1 | Na 136 | K 3,9",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b28",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Conduta",
+                "icon": "plan"
+              },
+              "children": []
+            },
+            {
+              "id": "b29",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Mantidos os antibióticos. Iniciada fisioterapia respiratória. RX de tórax de controle.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-27T11:10:00Z",
+          "updated_at": "2026-10-27T14:52:00Z",
+          "locked_at": "2026-10-27T14:52:00Z"
+        },
+        {
+          "id": "n-maria-2",
+          "evolution_id": "maria",
+          "content": [
+            {
+              "id": "b30",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b31",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "D3 de internação. Pico febril de 38,2 °C às 22h de ontem. Mantém dispneia aos pequenos esforços.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b32",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Sinais vitais",
+                "icon": "vitals"
+              },
+              "children": []
+            },
+            {
+              "id": "b33",
+              "type": "vitals",
+              "props": {
+                "pa": "138 x 84",
+                "fc": "102",
+                "fr": "24",
+                "sat_o2": "91 (CN 3 L/min)",
+                "temperatura": "37,6",
+                "dor": "3"
+              },
+              "children": []
+            },
+            {
+              "id": "b34",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Exames complementares",
+                "icon": "complementary"
+              },
+              "children": []
+            },
+            {
+              "id": "b35",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "LAB (26/10): Hb 11,6 | Leuco 13.100 | Plaq 290 | PCR 12,5 | Ur 55 | Cr 1,2 | Na 135 | K 3,8",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b36",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Conduta",
+                "icon": "plan"
+              },
+              "children": []
+            },
+            {
+              "id": "b37",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Hemoculturas de 24/10 sem crescimento até o momento. Mantidos os antibióticos. Broncodilatador de horário.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-26T10:55:00Z",
+          "updated_at": "2026-10-26T13:20:00Z",
+          "locked_at": "2026-10-26T13:20:00Z"
+        },
+        {
+          "id": "n-maria-1",
+          "evolution_id": "maria",
+          "content": [
+            {
+              "id": "b38",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Identificação",
+                "icon": "identification"
+              },
+              "children": []
+            },
+            {
+              "id": "b39",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Maria Aparecida dos Santos Oliveira, 78 anos, aposentada, natural de Uberaba (MG).",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b40",
+              "type": "sectionHeader",
+              "props": {
+                "title": "História da doença atual (HDA)",
+                "icon": "history"
+              },
+              "children": []
+            },
+            {
+              "id": "b41",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Há 4 dias com febre não aferida, tosse com expectoração amarelada e piora da falta de ar habitual. Procurou a UPA, onde recebeu nebulização e foi encaminhada.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b42",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Antecedentes pessoais",
+                "icon": "history"
+              },
+              "children": []
+            },
+            {
+              "id": "b43",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "DPOC GOLD 3 (ex-tabagista, 40 maços-ano), hipertensão arterial. Em uso de formoterol com budesonida, tiotrópio e losartana 50 mg/dia.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b44",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Exames complementares",
+                "icon": "complementary"
+              },
+              "children": []
+            },
+            {
+              "id": "b45",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "LAB (24/10): Hb 12,1 | Leuco 16.400 | Plaq 268 | PCR 18,2 | Ur 62 | Cr 1,4 | Na 133 | K 4,1 | Lactato 2,1",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b46",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "RX de tórax: consolidação em base direita.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b47",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Conduta",
+                "icon": "plan"
+              },
+              "children": []
+            },
+            {
+              "id": "b48",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Internação em enfermaria. Ceftriaxona e azitromicina. Hemoculturas e escarro. O2 com alvo de 88 a 92%.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-24T22:20:00Z",
+          "updated_at": "2026-10-24T23:58:00Z",
+          "locked_at": "2026-10-24T23:58:00Z"
+        }
+      ]
+    },
+    "francisco": {
+      "id": "francisco",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_name": "Francisco de Assis Nascimento",
+      "patient_age": 82,
+      "patient_sex": "M",
+      "patient_bed": "410A",
+      "context": "enfermaria",
+      "notes": [
+        {
+          "id": "n-francisco-1",
+          "evolution_id": "francisco",
+          "content": [
+            {
+              "id": "b55",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b56",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Insuficiência cardíaca descompensada, perfil B. Balanço hídrico negativo de 1.800 mL nas últimas 24h.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-28T11:22:00Z",
+          "updated_at": "2026-10-28T11:22:00Z",
+          "locked_at": null
+        }
+      ]
+    },
+    "jrs": {
+      "id": "jrs",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_initials": "J.R.S.",
+      "patient_age": 54,
+      "patient_sex": "M",
+      "patient_bed": "UTI 7",
+      "context": "uti",
+      "notes": [
+        {
+          "id": "n-jrs-1",
+          "evolution_id": "jrs",
+          "content": [
+            {
+              "id": "b49",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b50",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "D2 de UTI. Choque séptico de foco urinário em desmame de noradrenalina (0,08 mcg/kg/min). Sedado, RASS -2.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-28T09:15:00Z",
+          "updated_at": "2026-10-28T09:15:00Z",
+          "locked_at": null
+        }
+      ]
+    },
+    "antonio": {
+      "id": "antonio",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_name": "Antônio Carlos Ferreira",
+      "patient_age": 66,
+      "patient_sex": "M",
+      "patient_bed": "305A",
+      "patient_record": "2026093310",
+      "context": "enfermaria",
+      "notes": [
+        {
+          "id": "n-antonio-1",
+          "evolution_id": "antonio",
+          "content": [
+            {
+              "id": "b51",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b52",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Pós-operatório tardio de colecistectomia videolaparoscópica. Sem queixas. Deambulando, aceitando dieta geral.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "b53",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Conduta",
+                "icon": "plan"
+              },
+              "children": []
+            },
+            {
+              "id": "b54",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Alta hospitalar hoje com retorno ambulatorial em 15 dias.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-28T10:05:00Z",
+          "updated_at": "2026-10-28T10:31:00Z",
+          "locked_at": "2026-10-28T10:31:00Z"
+        }
+      ]
+    },
+    "luana": {
+      "id": "luana",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-28T12:05:00Z",
+      "archived_at": null,
+      "patient_name": "Luana Beatriz Moreira Costa",
+      "patient_age": 31,
+      "patient_sex": "F",
+      "context": "ps",
+      "notes": []
+    },
+    "helena": {
+      "id": "helena",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": null,
+      "patient_name": "Helena Prado",
+      "patient_age": 45,
+      "patient_sex": "F",
+      "patient_bed": "401",
+      "context": "enfermaria",
+      "notes": [
+        {
+          "id": "n-helena-1",
+          "evolution_id": "helena",
+          "content": [
+            {
+              "id": "b57",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Evolução do dia",
+                "icon": "subjective"
+              },
+              "children": []
+            },
+            {
+              "id": "b58",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Celulite em membro inferior esquerdo, D3 de cefalexina. Redução da área de eritema.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-27T19:40:00Z",
+          "updated_at": "2026-10-27T20:02:00Z",
+          "locked_at": "2026-10-27T20:02:00Z"
+        }
+      ]
+    },
+    "roberto": {
+      "id": "roberto",
+      "owner_id": "u-medico",
+      "title": null,
+      "created_at": "2026-10-20T12:00:00Z",
+      "archived_at": "2026-10-22T15:00:00Z",
+      "patient_name": "Roberto Siqueira Lima",
+      "patient_age": 59,
+      "patient_sex": "M",
+      "patient_bed": "402B",
+      "context": "enfermaria",
+      "notes": [
+        {
+          "id": "n-roberto-1",
+          "evolution_id": "roberto",
+          "content": [
+            {
+              "id": "b59",
+              "type": "sectionHeader",
+              "props": {
+                "title": "Resumo de alta",
+                "icon": "discharge"
+              },
+              "children": []
+            },
+            {
+              "id": "b60",
+              "type": "paragraph",
+              "props": {},
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Alta após tratamento de pielonefrite aguda.",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ],
+          "vitals": null,
+          "version": 1,
+          "created_at": "2026-10-21T13:00:00Z",
+          "updated_at": "2026-10-21T13:30:00Z",
+          "locked_at": "2026-10-21T13:30:00Z"
+        }
+      ]
+    }
+  }
+}
