@@ -1,0 +1,102 @@
+.root {
+  padding: 22px 14px 40px;
+  font-size: 14.5px;
+  line-height: 22px;
+  color: var(--text);
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: var(--track-bold);
+}
+
+.section:first-child {
+  margin-top: 0;
+}
+
+.section svg {
+  flex: none;
+  color: #6c6c6c;
+  margin-bottom: -3px;
+}
+
+.paragraph {
+  margin-top: 1px;
+}
+
+.list {
+  margin: 1px 0 0;
+  padding-left: 24px;
+}
+
+.box {
+  margin-top: 1px;
+  padding: 11px 12px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.boxTitle {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.04em;
+  color: #8a8a8a;
+}
+
+.vitals {
+  display: grid;
+  grid-template-columns: repeat(5, 141px);
+  gap: 7px 3.5px;
+  margin-top: 5px;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.vitals b {
+  margin-right: 4px;
+  letter-spacing: 0;
+  color: #6c6c6c;
+}
+
+.calcTitle {
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.calcText {
+  font-size: 13.5px;
+  white-space: pre-line;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: 6px 0;
+  font-size: 13.5px;
+}
+
+.table td {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 767px) {
+  .root {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .vitals {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

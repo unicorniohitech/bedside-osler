@@ -1,0 +1,131 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 41;
+  width: 85%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 28px 0;
+}
+
+.head svg.icon {
+  flex: none;
+  color: var(--primary);
+}
+
+.title {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: var(--track-bold);
+  color: var(--text);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: #8a8a8a;
+  margin-right: 3px;
+}
+
+.body {
+  padding: 20px 28px 34px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--text);
+}
+
+.body p + p {
+  margin-top: 14px;
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 14px 21px;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+.foot > * {
+  height: 46px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+.small {
+  width: 450px;
+}
+
+.small .head {
+  padding-top: 28px;
+}
+
+.small .body {
+  padding-top: 24px;
+}
+
+.small .foot {
+  gap: 21px;
+}
+
+@media (max-width: 767px) {
+  .content,
+  .small {
+    width: calc(100% - 28px);
+  }
+
+  .small .head {
+    padding-top: 24px;
+  }
+
+  .small .body {
+    padding-top: 15px;
+  }
+
+  .small .foot {
+    gap: 11px;
+  }
+
+  .head {
+    padding: 24px 21px 0;
+  }
+
+  .body {
+    padding: 15px 21px 37px;
+    font-size: 15px;
+    line-height: 21px;
+  }
+
+  .foot {
+    flex-direction: column-reverse;
+    gap: 11px;
+    padding: 14px 18px 14px;
+  }
+
+  .foot > * {
+    width: 100%;
+    height: 44px;
+  }
+}
