@@ -7,6 +7,7 @@
       "title": null,
       "created_at": "2026-10-24T22:10:00Z",
       "archived_at": null,
+      "photo_avatar": "woman_2",
       "patient_name": "Maria Aparecida dos Santos Oliveira",
       "patient_initials": "M.A.S.O.",
       "patient_age": 78,
@@ -14,6 +15,7 @@
       "patient_bed": "412B",
       "patient_record": "2024118734",
       "context": "enfermaria",
+      "health_status": "atencao",
       "updated_at": "2026-10-28T10:40:00Z",
       "last_note_at": "2026-10-28T10:40:00Z",
       "last_note_locked_at": null
@@ -29,6 +31,7 @@
       "patient_sex": "M",
       "patient_bed": "410A",
       "context": "enfermaria",
+      "health_status": "grave",
       "updated_at": "2026-10-28T11:22:00Z",
       "last_note_at": "2026-10-28T11:22:00Z",
       "last_note_locked_at": null
@@ -44,6 +47,7 @@
       "patient_sex": "M",
       "patient_bed": "UTI 7",
       "context": "uti",
+      "health_status": "critico",
       "updated_at": "2026-10-28T09:15:00Z",
       "last_note_at": "2026-10-28T09:15:00Z",
       "last_note_locked_at": null
@@ -60,6 +64,7 @@
       "patient_bed": "305A",
       "patient_record": "2026093310",
       "context": "enfermaria",
+      "health_status": "em_observacao",
       "updated_at": "2026-10-28T10:31:00Z",
       "last_note_at": "2026-10-28T10:05:00Z",
       "last_note_locked_at": "2026-10-28T10:31:00Z"
@@ -74,6 +79,7 @@
       "patient_age": 31,
       "patient_sex": "F",
       "context": "ps",
+      "health_status": "grave",
       "updated_at": "2026-10-28T12:05:00Z",
       "last_note_at": null,
       "last_note_locked_at": null
@@ -84,11 +90,13 @@
       "title": null,
       "created_at": "2026-10-20T12:00:00Z",
       "archived_at": null,
+      "photo_avatar": "woman_1",
       "patient_name": "Helena Prado",
       "patient_age": 45,
       "patient_sex": "F",
       "patient_bed": "401",
       "context": "enfermaria",
+      "health_status": "critico",
       "updated_at": "2026-10-27T20:02:00Z",
       "last_note_at": "2026-10-27T19:40:00Z",
       "last_note_locked_at": "2026-10-27T20:02:00Z"
@@ -104,6 +112,7 @@
       "patient_sex": "M",
       "patient_bed": "402B",
       "context": "enfermaria",
+      "health_status": "critico",
       "updated_at": "2026-10-21T13:30:00Z",
       "last_note_at": "2026-10-21T13:00:00Z",
       "last_note_locked_at": "2026-10-21T13:30:00Z"
@@ -123,6 +132,7 @@
       "patient_bed": "412B",
       "patient_record": "2024118734",
       "context": "enfermaria",
+      "health_status": "critico",
       "notes": [
         {
           "id": "n-maria-4",
@@ -721,6 +731,7 @@
       "patient_sex": "M",
       "patient_bed": "410A",
       "context": "enfermaria",
+      "health_status": "grave",
       "notes": [
         {
           "id": "n-francisco-1",
@@ -768,6 +779,7 @@
       "patient_sex": "M",
       "patient_bed": "UTI 7",
       "context": "uti",
+      "health_status": "critico",
       "notes": [
         {
           "id": "n-jrs-1",
@@ -816,6 +828,7 @@
       "patient_bed": "305A",
       "patient_record": "2026093310",
       "context": "enfermaria",
+      "health_status": "em_observacao",
       "notes": [
         {
           "id": "n-antonio-1",
@@ -884,6 +897,7 @@
       "patient_age": 31,
       "patient_sex": "F",
       "context": "ps",
+      "health_status": "grave",
       "notes": []
     },
     "helena": {
@@ -897,6 +911,7 @@
       "patient_sex": "F",
       "patient_bed": "401",
       "context": "enfermaria",
+      "health_status": "critico",
       "notes": [
         {
           "id": "n-helena-1",
@@ -944,6 +959,7 @@
       "patient_sex": "M",
       "patient_bed": "402B",
       "context": "enfermaria",
+      "health_status": "critico",
       "notes": [
         {
           "id": "n-roberto-1",
