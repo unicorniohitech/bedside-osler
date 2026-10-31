@@ -1,0 +1,16 @@
+.avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: inherit;
+  align-items: center;
+}
+
+.image {
+  width: 100%;
+  max-width: 85.417px;
+  max-height: 85.417px;
+  height: 100%;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  object-fit: cover;
+}

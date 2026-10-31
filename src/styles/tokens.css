@@ -26,6 +26,11 @@
   --archived-bg: #ebeced;
   --table-head: #f1f5f9;
   --session-time: #475e7d;
+  --status-estavel: #16a34a;
+  --status-em-observacao: #84b816;
+  --status-atencao: #eab308;
+  --status-grave: #ea7317;
+  --status-critico: #dc2626;
   --font: 'Plus Jakarta Sans', system-ui, sans-serif;
   /* A Plus Jakarta é ~3,7% mais estreita que a fonte das telas no regular e ~2% mais larga no negrito. */
   --track-body: 0.021em;
