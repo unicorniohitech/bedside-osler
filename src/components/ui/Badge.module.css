@@ -1,0 +1,25 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.archived {
+  height: 24px;
+  padding: 0 9px;
+  background: var(--archived-bg);
+  color: #4c5a6e;
+  font-size: 13px;
+}
+
+.finalized {
+  height: 25px;
+  padding: 0 7px 0 9px;
+  background: var(--success-bg);
+  color: var(--success-text);
+  font-size: 13px;
+}
