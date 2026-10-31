@@ -14,5 +14,5 @@ for (let row = -1; row <= 2; row++) {
     uses.push(`<use href="#s" x="${x}" y="${Y0 + row * DY}"/>`)
   }
 }
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><path id="s" d="${d}" fill-rule="evenodd"/></defs><g fill="#F1F1F1">${uses.join('')}</g></svg>`
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><path id="s" d="${d}" fill-rule="evenodd"/></defs><g fill="#F3F3F3">${uses.join('')}</g></svg>`
 fs.writeFileSync('src/assets/watermark.svg', svg)
