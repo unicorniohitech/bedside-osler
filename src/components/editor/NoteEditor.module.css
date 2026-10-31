@@ -1,0 +1,60 @@
+.editor {
+  --bn-font-family: var(--font);
+}
+
+.editor :global(.bn-editor) {
+  padding: 49px 49px 60px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  letter-spacing: var(--track-body);
+}
+
+.editor :global(.bn-container),
+.editor :global(.bn-block-outer) {
+  font-family: var(--font);
+}
+
+.editor :global(.bn-block-outer) {
+  line-height: 25.3px;
+}
+
+.editor :global(.bn-block-content) {
+  padding: 3px 0;
+}
+
+.editor :global(.bn-block-content[data-content-type='paragraph']) :global(.bn-inline-content) {
+  max-width: 730px;
+}
+
+.editor :global(.bn-block-content[data-content-type='sectionHeader']) {
+  padding: 11px 0 2.4px;
+}
+
+.editor :global(.bn-block-content[data-content-type='vitals']),
+.editor :global(.bn-block-content[data-content-type='dictation']),
+.editor :global(.bn-block-content[data-content-type='calcResult']) {
+  padding: 5.6px 0 3px;
+}
+
+.editor :global(.bn-block-content[data-content-type='bulletListItem'])::before {
+  transform: scale(0.6) translateY(5px);
+}
+
+@media (max-width: 767px) {
+  .editor :global(.bn-editor) {
+    padding: 22px 14px 40px;
+    font-size: 13.5px;
+    letter-spacing: 0.006em;
+  }
+
+  .editor :global(.bn-block-outer) {
+    line-height: 20.7px;
+  }
+
+  .editor :global(.bn-block-content[data-content-type='bulletListItem']) {
+    font-size: 13.1px;
+    padding: 3px 0;
+  }
+}

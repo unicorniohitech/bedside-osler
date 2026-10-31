@@ -1,0 +1,111 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--card);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding-right: 60px;
+}
+
+.pcBody {
+  padding-right: 0;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+}
+
+.bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  height: 38px;
+  padding: 0 11px 0 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+.delete {
+  color: var(--danger);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  font-size: 11.5px;
+  color: #9a9a9a;
+}
+
+.status svg {
+  color: #9a9a9a;
+}
+
+.statusError,
+.statusError svg {
+  color: var(--error);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.center {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-bottom: 2px;
+}
+
+.first {
+  height: 46px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+.loading {
+  padding: 24px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 767px) {
+  .body {
+    flex-direction: column;
+    padding-right: 0;
+  }
+
+  .main {
+    min-height: 0;
+  }
+
+  .center .first {
+    height: 42px;
+    padding: 0 14px;
+    font-size: 12.5px;
+  }
+
+  .center {
+    padding-bottom: 12px;
+  }
+}
