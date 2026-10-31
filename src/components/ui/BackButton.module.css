@@ -1,0 +1,11 @@
+.back {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d4d4d4;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--primary);
+}

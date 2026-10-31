@@ -1,0 +1,24 @@
+.root {
+  position: relative;
+  background: var(--card);
+  min-height: 100%;
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('../../assets/watermark.svg');
+  background-repeat: repeat;
+  pointer-events: none;
+}
+
+/* Nas telas a marca d'água termina em 1320 px, deixando uma faixa lisa à direita. */
+@media (min-width: 768px) {
+  .gutter .pattern {
+    right: 60px;
+  }
+}
+
+.content {
+  position: relative;
+}

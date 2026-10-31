@@ -1,0 +1,66 @@
+import type { Page } from 'playwright'
+
+export interface Scene {
+  n: number
+  url: string
+  act?: (p: Page) => Promise<void>
+}
+
+const E = '/evolucoes/maria'
+
+export const SCENES: Scene[] = [
+  { n: 1, url: '/evolucoes' },
+  { n: 2, url: '/evolucoes' },
+  { n: 3, url: '/evolucoes?menu=maria' },
+  { n: 4, url: '/evolucoes?menu=maria' },
+  { n: 5, url: '/evolucoes?resumo=maria' },
+  { n: 6, url: '/evolucoes?arquivados=1&menu=roberto' },
+  { n: 7, url: '/evolucoes?busca=Valdemar' },
+  { n: 8, url: '/evolucoes?estado=vazio' },
+  { n: 9, url: '/evolucoes?estado=carregando' },
+  { n: 10, url: '/evolucoes/novo' },
+  { n: 11, url: '/evolucoes/novo?exemplo=1' },
+  { n: 12, url: '/evolucoes/novo' },
+  { n: 13, url: E },
+  { n: 14, url: E },
+  { n: 15, url: `${E}?rail=aberta` },
+  { n: 16, url: `${E}?barra=topo` },
+  { n: 17, url: `${E}?barra=bedside` },
+  { n: 18, url: `${E}?barra=topo` },
+  { n: 19, url: `${E}?simularErro=1` },
+  { n: 20, url: `${E}?nota=n-maria-3&painel=historico` },
+  { n: 21, url: `${E}?nota=n-maria-3&painel=historico` },
+  { n: 22, url: `${E}?dialogo=finalizar` },
+  { n: 23, url: `${E}?dialogo=finalizar` },
+  { n: 24, url: `${E}?dialogo=excluir` },
+  { n: 25, url: '/evolucoes/luana' },
+  { n: 26, url: '/evolucoes/luana' },
+  { n: 27, url: `${E}?painel=historico` },
+  { n: 28, url: `${E}?painel=historico` },
+  { n: 29, url: `${E}?painel=companion` },
+  { n: 30, url: `${E}?painel=companion&analisado=1` },
+  { n: 31, url: `${E}?painel=companion&analisado=1&aba=pontos` },
+  { n: 32, url: `${E}?painel=companion&analisado=1` },
+  { n: 33, url: `${E}?painel=passar` },
+  { n: 34, url: `${E}?painel=passar&gerado=1` },
+  { n: 35, url: `${E}?painel=passar&gerado=1` },
+  { n: 36, url: `${E}?painel=fluxograma` },
+  { n: 37, url: `${E}?painel=fluxograma` },
+  { n: 38, url: `${E}?painel=cid&busca=pneumonia&sel=J18.9,J44.1` },
+  { n: 39, url: `${E}?painel=cid&busca=pneumonia&sel=J18.9,J44.1` },
+  { n: 40, url: `${E}?painel=calc` },
+  { n: 41, url: `${E}?painel=calc&calc=curb65` },
+  { n: 42, url: `${E}?painel=calc` },
+  { n: 43, url: `${E}?painel=templates` },
+  { n: 44, url: `${E}?painel=templates&template=soap` },
+  { n: 45, url: `${E}?painel=templates` },
+  { n: 46, url: `${E}?painel=lme` },
+  { n: 47, url: `${E}?painel=lme` },
+  { n: 48, url: `${E}?painel=arquivar` },
+  { n: 49, url: `${E}?painel=arquivar` },
+  { n: 50, url: `${E}?pc=escanear` },
+  { n: 51, url: `${E}?pc=confirmar` },
+  { n: 52, url: `${E}?pc=escanear` },
+  { n: 53, url: '/bedside-pc' },
+  { n: 54, url: '/bedside-pc/sessao' },
+]

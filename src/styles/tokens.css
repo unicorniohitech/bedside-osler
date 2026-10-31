@@ -1,0 +1,33 @@
+:root {
+  --primary: #1a365d;
+  --primary-disabled: #8b99ad;
+  --text: #404040;
+  --text-muted: #6c6c6c;
+  --text-faint: #838383;
+  --placeholder: #9a9a9a;
+  --surface: #ffffff;
+  --card: #fafafa;
+  --border: #ebebeb;
+  --border-input: #d4d4d4;
+  --tool-rail: #e4ebf2;
+  --tool-rail-border: #d4dce6;
+  --tool-item: #f4f7fa;
+  --tool-text: #4c6484;
+  --danger: #810d16;
+  --error: #c0282d;
+  --warning-bg: #fbf2dc;
+  --warning-border: #f0dfb0;
+  --warning-text: #9a6200;
+  --info-bg: #ebf3fa;
+  --info-border: #cfe0f0;
+  --info-icon: #2b6cb0;
+  --success-bg: #e4f8eb;
+  --success-text: #16a34a;
+  --archived-bg: #ebeced;
+  --table-head: #f1f5f9;
+  --session-time: #475e7d;
+  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+  /* A Plus Jakarta é ~3,7% mais estreita que a fonte das telas no regular e ~2% mais larga no negrito. */
+  --track-body: 0.021em;
+  --track-bold: -0.012em;
+}
