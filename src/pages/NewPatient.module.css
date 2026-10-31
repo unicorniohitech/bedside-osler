@@ -1,0 +1,219 @@
+.main {
+  min-height: calc(100vh - 60px);
+  padding: 43px 82px 40px 22px;
+}
+
+.panel {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: var(--track-bold);
+}
+
+.heading svg {
+  color: var(--primary);
+}
+
+.sub {
+  margin-top: 9px;
+  font-size: 13.5px;
+  line-height: 18px;
+  color: var(--text-muted);
+}
+
+.ctxLabel {
+  display: block;
+  margin: 19px 0 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.recordRow {
+  margin-top: 18px;
+}
+
+.field {
+  display: block;
+  min-width: 0;
+}
+
+.sexField {
+  padding-bottom: 28px;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 0 4px 2px;
+  margin-right: -2px;
+  font-size: 11.5px;
+  line-height: 15px;
+}
+
+.labelRow b {
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+
+.labelRow small {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.input {
+  width: 100%;
+  height: 42px;
+  padding: 0 15px;
+  border: 1px solid var(--border-input);
+  border-radius: 10px;
+  background: var(--card);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.input::placeholder {
+  color: var(--placeholder);
+  font-style: italic;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.select[data-placeholder] {
+  color: var(--placeholder);
+}
+
+.selectContent {
+  z-index: 30;
+  overflow: hidden;
+  border: 1px solid var(--border-input);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+.selectItem {
+  padding: 9px 15px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.selectItem[data-highlighted] {
+  background: var(--card);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 11px;
+  margin-top: 24px;
+}
+
+.actions > * {
+  height: 46px;
+  padding: 0 18px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .main {
+    min-height: calc(100vh - 65px);
+    padding: 35px 15px 15px;
+  }
+
+  .panel {
+    padding: 13px;
+  }
+
+  .heading {
+    gap: 9px;
+    font-size: 16.5px;
+    line-height: 20px;
+  }
+
+  .heading svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sub {
+    margin-top: 7px;
+    font-size: 12.5px;
+    line-height: 20px;
+  }
+
+  .ctxLabel {
+    margin: 12px 0 5px;
+    font-size: 12px;
+  }
+
+  .row2,
+  .row3 {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .recordRow {
+    margin-top: 15px;
+  }
+
+  .sexField {
+    padding-bottom: 27px;
+  }
+
+  .labelRow {
+    font-size: 12px;
+    padding-bottom: 4px;
+  }
+
+  .labelRow small {
+    font-size: 10.5px;
+  }
+
+  .input {
+    font-size: 13.5px;
+    padding: 0 14px;
+  }
+
+  .actions > * {
+    height: 42px;
+    padding: 0 15px;
+    font-size: 11.5px;
+  }
+}
