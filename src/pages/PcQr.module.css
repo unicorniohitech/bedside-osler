@@ -1,0 +1,98 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.brand {
+  flex: none;
+  width: 524px;
+  background: url('../assets/pc-panel.png') top left / 524px 900px no-repeat #491014;
+}
+
+.side {
+  flex: 1;
+  min-width: 0;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.card {
+  width: 519px;
+  padding: 25px 28px 29px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: var(--track-bold);
+}
+
+.title svg {
+  color: var(--primary);
+}
+
+.text {
+  margin-top: 7px;
+  font-size: 13.5px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+
+.qr {
+  display: block;
+  width: 257px;
+  margin: 18px auto 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.waiting {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+
+.waiting svg {
+  display: block;
+  margin: 0 auto 4px;
+}
+
+.simulate {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 767px) {
+  .brand {
+    display: none;
+  }
+
+  .card {
+    width: calc(100% - 30px);
+  }
+}
