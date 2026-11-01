@@ -1,24 +1,24 @@
 import type { ComponentType } from 'react'
-import { Arquivar } from './Arquivar'
-import { Calculadoras } from './Calculadoras'
+import { ArchivePatient } from './ArchivePatient'
+import { Calculators } from './Calculators'
 import { Cid } from './Cid'
 import { Companion } from './Companion'
-import { Fluxograma } from './Fluxograma'
-import { Historico } from './Historico'
+import { LabFlowchart } from './LabFlowchart'
+import { NoteHistory } from './NoteHistory'
 import { LmeApac } from './LmeApac'
-import { PassarCaso } from './PassarCaso'
+import { CaseHandoff } from './CaseHandoff'
 import { Templates } from './Templates'
 import type { ToolId } from './registry'
 import type { ToolProps } from './types'
 
 export const TOOL_COMPONENTS: Record<ToolId, ComponentType<ToolProps>> = {
-  historico: Historico,
+  history: NoteHistory,
   companion: Companion,
-  passar: PassarCaso,
-  fluxograma: Fluxograma,
+  handoff: CaseHandoff,
+  flowchart: LabFlowchart,
   cid: Cid,
-  calc: Calculadoras,
+  calc: Calculators,
   templates: Templates,
   lme: LmeApac,
-  arquivar: Arquivar,
+  archive: ArchivePatient,
 }

@@ -1,9 +1,46 @@
 import { BlockNoteSchema, defaultBlockSpecs } from '@blocknote/core'
 import { createReactBlockSpec } from '@blocknote/react'
-import { Activity, Calculator, Check, Mic, X } from 'lucide-react'
-import { VITAL_FIELDS } from '../../lib/noteText'
+import { Activity, Calculator, Check, ChevronDown, Mic, X } from 'lucide-react'
+import { VITAL_FIELDS } from '@/lib/noteText'
+import { collapsedSections, useSectionCollapsed } from './collapsedSections'
 import { SECTION_ICONS } from './sectionIcons'
 import s from './blocks.module.css'
+
+type SectionBlock = { id: string; props: { title: string; icon: string } }
+type SectionEditor = {
+  isEditable: boolean
+  updateBlock: (block: SectionBlock, update: { props: { title: string } }) => unknown
+}
+
+function SectionHeader({ block, editor }: { block: SectionBlock; editor: SectionEditor }) {
+  const collapsed = useSectionCollapsed(editor, block.id)
+  const Icon = SECTION_ICONS[block.props.icon] ?? SECTION_ICONS.subjective
+  return (
+    <div className={s.section}>
+      <Icon size={16} strokeWidth={1.5} aria-hidden />
+      {editor.isEditable ? (
+        <input
+          className={s.sectionInput}
+          aria-label="Título da seção"
+          value={block.props.title}
+          onChange={(e) => editor.updateBlock(block, { props: { title: e.target.value } })}
+        />
+      ) : (
+        <span className={s.sectionTitle}>{block.props.title}</span>
+      )}
+      <button
+        type="button"
+        className={s.sectionToggle}
+        aria-expanded={!collapsed}
+        aria-label={`${collapsed ? 'Expandir' : 'Recolher'} ${block.props.title}`}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={() => collapsedSections(editor).set(block.id, !collapsed)}
+      >
+        <ChevronDown size={16} strokeWidth={1.5} aria-hidden />
+      </button>
+    </div>
+  )
+}
 
 const SectionHeaderBlock = createReactBlockSpec(
   {
@@ -12,24 +49,7 @@ const SectionHeaderBlock = createReactBlockSpec(
     content: 'none',
   },
   {
-    render: ({ block, editor }) => {
-      const Icon = SECTION_ICONS[block.props.icon] ?? SECTION_ICONS.subjective
-      return (
-        <div className={s.section}>
-          <Icon size={16} strokeWidth={1.5} aria-hidden />
-          {editor.isEditable ? (
-            <input
-              className={s.sectionInput}
-              aria-label="Título da seção"
-              value={block.props.title}
-              onChange={(e) => editor.updateBlock(block, { props: { title: e.target.value } })}
-            />
-          ) : (
-            block.props.title
-          )}
-        </div>
-      )
-    },
+    render: ({ block, editor }) => <SectionHeader block={block} editor={editor} />,
   },
 )
 
@@ -98,11 +118,11 @@ const DictationBlock = createReactBlockSpec(
           <div className={s.dictationActions}>
             <button type="button">
               <Mic size={14} strokeWidth={1.75} aria-hidden />
-              Iniciar gravação
+              Gravar
             </button>
             <button type="button" onClick={apply}>
               <Check size={14} strokeWidth={1.75} aria-hidden />
-              Aplicar como texto
+              Aplicar texto
             </button>
             <button type="button" className={s.ghost} onClick={() => editor.removeBlocks([block])}>
               <X size={14} strokeWidth={1.75} aria-hidden />

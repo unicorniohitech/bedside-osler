@@ -2,9 +2,9 @@ import { useState } from 'react'
 import * as Tabs from '@radix-ui/react-tabs'
 import { Bell, FileText, Info, ListChecks, RefreshCw, Sparkles, TriangleAlert } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { formatDateTime } from '../../lib/dates'
-import { COMPANION, SUMMARIES } from '../../mocks/ai'
-import { isCapture } from '../../lib/capture'
+import { formatDateTime } from '@/lib/dates'
+import { COMPANION, SUMMARIES } from '@/mocks/ai'
+import { isCapture } from '@/lib/capture'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
@@ -12,7 +12,7 @@ const DOT = { high: '#e53935', medium: '#eab308', low: '#9aa0a8' }
 const DISCLAIMER = 'Sugestões do Osler Companion. Não substituem julgamento clínico.'
 
 export function Companion({ params, evolution }: ToolProps) {
-  const [analyzed, setAnalyzed] = useState(params.has('analisado'))
+  const [analyzed, setAnalyzed] = useState(params.has('analyzed'))
   const [busy, setBusy] = useState(false)
 
   const analyze = () => {
@@ -49,22 +49,22 @@ export function Companion({ params, evolution }: ToolProps) {
 
   return (
     <div className={s.fill}>
-      <Tabs.Root defaultValue={params.get('aba') ?? 'alertas'} className={s.fill} style={{ marginTop: 3 }}>
+      <Tabs.Root defaultValue={params.get('tab') ?? 'alerts'} className={s.fill} style={{ marginTop: 3 }}>
         <Tabs.List className={s.tabs} aria-label="Análise">
-          <Tabs.Trigger className={s.tab} value="alertas">
+          <Tabs.Trigger className={s.tab} value="alerts">
             <Bell size={13} strokeWidth={1.5} aria-hidden />
             Alertas · {COMPANION.alerts.length}
           </Tabs.Trigger>
-          <Tabs.Trigger className={s.tab} value="pontos">
+          <Tabs.Trigger className={s.tab} value="points">
             <ListChecks size={13} strokeWidth={1.5} aria-hidden />
             Pontos · {COMPANION.points.length}
           </Tabs.Trigger>
-          <Tabs.Trigger className={s.tab} value="resumo">
+          <Tabs.Trigger className={s.tab} value="summary">
             <FileText size={13} strokeWidth={1.5} aria-hidden />
             Resumo
           </Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content className={s.tabPanel} value="alertas">
+        <Tabs.Content className={s.tabPanel} value="alerts">
           {COMPANION.alerts.map((a) => (
             <div key={a.title} className={`${s.alert} ${a.level === 'warning' ? s.alertWarn : ''}`}>
               {a.level === 'warning' ? (
@@ -79,7 +79,7 @@ export function Companion({ params, evolution }: ToolProps) {
             </div>
           ))}
         </Tabs.Content>
-        <Tabs.Content className={s.tabPanel} value="pontos">
+        <Tabs.Content className={s.tabPanel} value="points">
           {COMPANION.points.map((p) => (
             <div
               key={p.title}
@@ -91,7 +91,7 @@ export function Companion({ params, evolution }: ToolProps) {
             </div>
           ))}
         </Tabs.Content>
-        <Tabs.Content className={s.tabPanel} value="resumo">
+        <Tabs.Content className={s.tabPanel} value="summary">
           <p className={s.handoffText}>{SUMMARIES[evolution.id] ?? SUMMARIES.maria}</p>
         </Tabs.Content>
       </Tabs.Root>

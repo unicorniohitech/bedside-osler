@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import { Table2, X } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { extractLabs, isLabTable, labTableBlock } from '../../lib/labs'
-import type { NoteBlock } from '../../types'
+import { extractLabs, isLabTable, labTableBlock } from '@/lib/labs'
+import type { NoteBlock } from '@/types'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
-export function Fluxograma({ evolution, editor }: ToolProps) {
+export function LabFlowchart({ evolution, editor }: ToolProps) {
   const sheet = useMemo(() => extractLabs(evolution.notes), [evolution.notes])
   const [off, setOff] = useState<string[]>([])
   const [inserted, setInserted] = useState(() => Boolean(editor?.document().some(isLabTable)))

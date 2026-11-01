@@ -16,7 +16,7 @@ export function ToolRail(props: {
     >
       {TOOLS.map(({ id, label, Icon }) => (
         <div key={id} style={{ display: 'contents' }}>
-          {id === 'arquivar' && <div className={s.rule} />}
+          {id === 'archive' && <div className={s.rule} />}
           <button
             type="button"
             className={`${s.item} ${props.active === id ? s.active : ''}`}

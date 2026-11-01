@@ -152,7 +152,7 @@ export function buildSlashItems(editor: BedsideEditor, openTool: (t: ToolId) => 
       group: 'Bedside',
       bedside: true,
       icon: <FlaskConical {...ICON} />,
-      onItemClick: () => openTool('fluxograma'),
+      onItemClick: () => openTool('flowchart'),
     },
     {
       title: 'Sinais vitais',

@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react'
 import { Check, FilePlus2, Search, X } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { CID10 } from '../../mocks/cid'
+import { CID10 } from '@/mocks/cid'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
 export function Cid({ params, editor, onClose }: ToolProps) {
-  const [query, setQuery] = useState(params.get('busca') ?? '')
-  const [selected, setSelected] = useState<string[]>(params.get('sel')?.split(',') ?? [])
+  const [query, setQuery] = useState(params.get('search') ?? '')
+  const [selected, setSelected] = useState<string[]>(params.get('selected')?.split(',') ?? [])
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()

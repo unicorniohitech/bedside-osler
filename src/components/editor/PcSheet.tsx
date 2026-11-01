@@ -6,7 +6,7 @@ import { focusContent } from '../ui/Dialog'
 import s from './PcSheet.module.css'
 
 export function PcSheet(props: {
-  initial: 'escanear' | 'confirmar'
+  initial: 'scan' | 'confirm'
   patientName: string
   onClose: () => void
   onApprove: () => void
@@ -24,7 +24,7 @@ export function PcSheet(props: {
               <X size={18} aria-hidden />
             </RadixDialog.Close>
           </div>
-          {step === 'escanear' ? (
+          {step === 'scan' ? (
             <div className={s.body}>
               <p>
                 No computador, abra <strong>oslermedicina.com.br/bedside-pc</strong> e aponte a câmera para o
@@ -34,7 +34,7 @@ export function PcSheet(props: {
                 type="button"
                 className={s.camera}
                 aria-label="Câmera: simular leitura do QR"
-                onClick={() => setStep('confirmar')}
+                onClick={() => setStep('confirm')}
               >
                 <span className={s.frame} />
               </button>

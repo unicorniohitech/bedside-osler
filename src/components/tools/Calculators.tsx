@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { ArrowLeft, Eraser, FilePlus2, Info, Search } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { CALCULATOR_GROUPS, CURB65 } from '../../mocks/calculators'
+import { CALCULATOR_GROUPS, CURB65 } from '@/mocks/calculators'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
@@ -84,7 +84,7 @@ function Curb65({
   )
 }
 
-export function Calculadoras({ params, editor, onClose }: ToolProps) {
+export function Calculators({ params, editor, onClose }: ToolProps) {
   const [open, setOpen] = useState(params.get('calc') === CURB65.id)
   const [query, setQuery] = useState('')
 

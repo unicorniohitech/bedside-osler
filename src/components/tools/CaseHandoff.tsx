@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { ClipboardList, Copy, RefreshCw } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { formatDateTime } from '../../lib/dates'
-import { HANDOFF } from '../../mocks/ai'
-import { isCapture } from '../../lib/capture'
+import { formatDateTime } from '@/lib/dates'
+import { HANDOFF } from '@/mocks/ai'
+import { isCapture } from '@/lib/capture'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
 const DISCLAIMER = 'Gerado por IA a partir das suas notas. Revise antes de usar.'
 
-export function PassarCaso({ params }: ToolProps) {
-  const [generated, setGenerated] = useState(params.has('gerado'))
+export function CaseHandoff({ params }: ToolProps) {
+  const [generated, setGenerated] = useState(params.has('generated'))
   const [busy, setBusy] = useState(false)
 
   const generate = () => {

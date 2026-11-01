@@ -3,20 +3,20 @@ export type Sex = 'F' | 'M'
 
 // Objeto const no lugar de `enum`: o tsconfig usa erasableSyntaxOnly, que não aceita enum.
 export const HealthStatus = {
-  Estavel: 'estavel',
-  EmObservacao: 'em_observacao',
-  Atencao: 'atencao',
-  Grave: 'grave',
-  Critico: 'critico',
+  Stable: 'stable',
+  UnderObservation: 'under_observation',
+  Attention: 'attention',
+  Severe: 'severe',
+  Critical: 'critical',
 } as const
 export type HealthStatus = (typeof HealthStatus)[keyof typeof HealthStatus]
 
 export const HEALTH_STATUS_COLOR: Record<HealthStatus, string> = {
-  [HealthStatus.Estavel]: 'var(--status-estavel)',
-  [HealthStatus.EmObservacao]: 'var(--status-em-observacao)',
-  [HealthStatus.Atencao]: 'var(--status-atencao)',
-  [HealthStatus.Grave]: 'var(--status-grave)',
-  [HealthStatus.Critico]: 'var(--status-critico)',
+  [HealthStatus.Stable]: 'var(--status-stable)',
+  [HealthStatus.UnderObservation]: 'var(--status-under-observation)',
+  [HealthStatus.Attention]: 'var(--status-attention)',
+  [HealthStatus.Severe]: 'var(--status-severe)',
+  [HealthStatus.Critical]: 'var(--status-critical)',
 }
 
 export interface Patient {

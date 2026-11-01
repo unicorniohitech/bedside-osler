@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ExternalLink, Plus, Search } from 'lucide-react'
-import { APACS, LMES } from '../../mocks/lme'
+import { APACS, LMES } from '@/mocks/lme'
 import btn from '../ui/Button.module.css'
 import s from './tools.module.css'
 

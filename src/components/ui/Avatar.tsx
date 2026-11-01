@@ -11,13 +11,9 @@ type Props = {
 }
 
 export function Avatar({ src, alt = '', status, size = 100, className }: Props) {
-  // console.log("🚀 ~ Avatar ~ src:", src)
   function getPatientImage(imageName: string | undefined) {
-  console.log("🚀 ~ getPatientImage ~ imageName:", imageName)
-  // O Vite analisa essa linha e inclui a imagem no build final
   return new URL(`../../assets/patients/${imageName}.png`, import.meta.url).href;
 }
-  console.log(getPatientImage(src), "🚀 ~ Avatar ~ src:", src)
 
   const color = status && HEALTH_STATUS_COLOR[status]
   return (
@@ -25,7 +21,6 @@ export function Avatar({ src, alt = '', status, size = 100, className }: Props) 
       {src ? (
         <img className={s.image} src={getPatientImage(src)} alt={alt} />
       ) : (
-        // O círculo do próprio ícone faz o papel de borda.
         <CircleUserRound size={size} strokeWidth={0.5} aria-hidden />
       )}
     </span>

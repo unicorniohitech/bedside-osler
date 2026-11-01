@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { CircleCheck, Monitor } from 'lucide-react'
-import { Workspace, type WorkspaceHeaderProps } from '../components/editor/Workspace'
-import { Badge } from '../components/ui/Badge'
-import { BackButton } from '../components/ui/BackButton'
-import { Button } from '../components/ui/Button'
+import { Workspace, type WorkspaceHeaderProps } from '@/components/editor/Workspace'
+import { Badge } from '@/components/ui/Badge'
+import { BackButton } from '@/components/ui/BackButton'
+import { Button } from '@/components/ui/Button'
 import { displayName, headerLine } from '../lib/patient'
 import s from './Editor.module.css'
 
-function EditorHeader({ evolution, note, openFinalize, openPc }: WorkspaceHeaderProps) {
+function EditorHeader({ evolution, note, openfinish, openPc }: WorkspaceHeaderProps) {
   const locked = Boolean(note?.locked_at)
   return (
     <header className={s.header}>
@@ -18,7 +18,7 @@ function EditorHeader({ evolution, note, openFinalize, openPc }: WorkspaceHeader
       </div>
       <div className={s.actions}>
         {locked && (
-          <Badge tone="finalized">
+          <Badge tone="finishd">
             <CircleCheck size={13} strokeWidth={1.75} aria-hidden />
             Finalizada
           </Badge>
@@ -28,7 +28,7 @@ function EditorHeader({ evolution, note, openFinalize, openPc }: WorkspaceHeader
           Abrir no computador
         </Button>
         {note && !locked && (
-          <Button onClick={openFinalize}>
+          <Button onClick={openfinish}>
             <CircleCheck size={15} strokeWidth={1.75} aria-hidden />
             Finalizar evolução
           </Button>

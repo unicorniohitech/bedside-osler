@@ -7,34 +7,34 @@ import { TOOL_COMPONENTS } from '../tools'
 import type { ToolId } from '../tools/registry'
 import { Button } from '../ui/Button'
 import { Dialog, dialogIconClass } from '../ui/Dialog'
-import { isCapture } from '../../lib/capture'
-import { formatDateTime, formatDayAtTime } from '../../lib/dates'
-import { noteToText } from '../../lib/noteText'
-import { displayName } from '../../lib/patient'
-import { useIsMobile } from '../../lib/useIsMobile'
-import { api } from '../../services/api'
-import type { Evolution, Note, NoteBlock } from '../../types'
+import { isCapture } from '@/lib/capture'
+import { formatDateTime, formatDayAtTime } from '@/lib/dates'
+import { noteToText } from '@/lib/noteText'
+import { displayName } from '@/lib/patient'
+import { useIsMobile } from '@/lib/useIsMobile'
+import { api } from '@/services/api'
+import type { Evolution, Note, NoteBlock } from '@/types'
 import { NoteEditor, type EditorApi } from './NoteEditor'
 import { NoteReadOnly } from './NoteReadOnly'
 import { PcSheet } from './PcSheet'
 import s from './Workspace.module.css'
 
 const PANEL_PARAM: Record<string, ToolId> = {
-  historico: 'historico',
+  history: 'history',
   companion: 'companion',
-  passar: 'passar',
-  fluxograma: 'fluxograma',
+  handoff: 'handoff',
+  flowchart: 'flowchart',
   cid: 'cid',
   calc: 'calc',
   templates: 'templates',
   lme: 'lme',
-  arquivar: 'arquivar',
+  archive: 'archive',
 }
 
 export interface WorkspaceHeaderProps {
   evolution: Evolution
   note: Note | null
-  openFinalize: () => void
+  openfinish: () => void
   openPc: () => void
 }
 
@@ -47,14 +47,14 @@ export function Workspace(props: {
   const navigate = useNavigate()
   const mobile = useIsMobile()
   const [evolution, setEvolution] = useState<Evolution | null>(null)
-  const noteId = params.get('nota')
-  const [tool, setTool] = useState<ToolId | null>(PANEL_PARAM[params.get('painel') ?? ''] ?? null)
+  const noteId = params.get('note')
+  const [tool, setTool] = useState<ToolId | null>(PANEL_PARAM[params.get('panel') ?? ''] ?? null)
   const [railHover, setRailHover] = useState(false)
-  const [dialog, setDialog] = useState<string | null>(params.get('dialogo'))
-  const [pc, setPc] = useState<'escanear' | 'confirmar' | null>(
-    (params.get('pc') as 'escanear' | 'confirmar') ?? null,
+  const [dialog, setDialog] = useState<string | null>(params.get('dialog'))
+  const [pc, setPc] = useState<'scan' | 'confirm' | null>(
+    (params.get('pc') as 'scan' | 'confirm') ?? null,
   )
-  const simulateError = params.has('simularErro')
+  const simulateError = params.has('simulateError')
   const [saveState, setSaveState] = useState<{ error: boolean; at: string | null }>({
     error: simulateError,
     at: null,
@@ -86,7 +86,7 @@ export function Workspace(props: {
 
   const selectNote = (id: string) => {
     const next = new URLSearchParams(params)
-    next.set('nota', id)
+    next.set('note', id)
     setParams(next, { replace: true })
     if (mobile) setTool(null)
   }
@@ -121,9 +121,9 @@ export function Workspace(props: {
     void navigator.clipboard.writeText(noteToText(blocks))
   }
 
-  const finalize = async () => {
+  const finish = async () => {
     if (!note) return
-    await api.finalizeNote(props.id, note.id)
+    await api.finishNote(props.id, note.id)
     await reload()
     setDialog(null)
   }
@@ -132,7 +132,7 @@ export function Workspace(props: {
     if (!note) return
     await api.deleteNote(props.id, note.id)
     const next = new URLSearchParams(params)
-    next.delete('nota')
+    next.delete('note')
     setParams(next, { replace: true })
     await reload()
     setDialog(null)
@@ -149,7 +149,7 @@ export function Workspace(props: {
   const selectTool = (id: ToolId) => setTool((cur) => (cur === id ? null : id))
   const ActiveTool = tool ? TOOL_COMPONENTS[tool] : null
   const panelOpen = Boolean(tool)
-  const railExpanded = panelOpen || railHover || params.get('rail') === 'aberta'
+  const railExpanded = panelOpen || railHover || params.get('rail') === 'open'
   const savedAt = saveState.at ?? note?.updated_at
 
   return (
@@ -157,8 +157,8 @@ export function Workspace(props: {
       {props.header({
         evolution,
         note,
-        openFinalize: () => setDialog('finalizar'),
-        openPc: () => setPc('escanear'),
+        openfinish: () => setDialog('finish'),
+        openPc: () => setPc('scan'),
       })}
       <div className={`${s.body} ${props.pcMode ? s.pcBody : ''}`}>
         {mobile && (
@@ -172,7 +172,7 @@ export function Workspace(props: {
                   type="button"
                   className={`${s.iconBtn} ${s.delete}`}
                   aria-label="Excluir nota"
-                  onClick={() => setDialog('excluir')}
+                  onClick={() => setDialog('delete')}
                 >
                   <Trash2 size={18} strokeWidth={1.5} aria-hidden />
                 </button>
@@ -213,7 +213,7 @@ export function Workspace(props: {
                   key={note.id}
                   ref={editorRef}
                   content={note.content}
-                  barra={params.get('barra')}
+                  slash={params.get('slash')}
                   onChange={handleChange}
                   onOpenTool={setTool}
                 />
@@ -240,7 +240,7 @@ export function Workspace(props: {
       </div>
 
       <Dialog
-        open={dialog === 'finalizar'}
+        open={dialog === 'finish'}
         onClose={() => setDialog(null)}
         title="Finalizar evolução"
         icon={<CircleCheck className={dialogIconClass} size={26} strokeWidth={1.75} aria-hidden />}
@@ -249,7 +249,7 @@ export function Workspace(props: {
             <Button variant="secondary" onClick={() => setDialog(null)}>
               Cancelar
             </Button>
-            <Button onClick={() => void finalize()}>Finalizar evolução</Button>
+            <Button onClick={() => void finish()}>Finalizar evolução</Button>
           </>
         }
       >
@@ -264,7 +264,7 @@ export function Workspace(props: {
       </Dialog>
 
       <Dialog
-        open={dialog === 'excluir'}
+        open={dialog === 'delete'}
         onClose={() => setDialog(null)}
         size="small"
         title="Excluir nota"

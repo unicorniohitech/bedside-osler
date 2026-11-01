@@ -1,9 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { PatientList } from '../pages/PatientList'
-import { NewPatient } from '../pages/NewPatient'
-import { Editor } from '../pages/Editor'
-import { PcQr } from '../pages/PcQr'
-import { PcSession } from '../pages/PcSession'
+import { PatientList } from '../pages/Patients/PatientList'
+import { NewPatient } from '@/pages/Patients/NewPatient'
+import { Editor } from '@/pages/Editor'
+import { PcQr } from '@/pages/PcQr'
+import { PcSession } from '@/pages/PcSession'
 
 export function App() {
   return (

@@ -29,6 +29,29 @@
   outline: none;
 }
 
+.sectionTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.sectionToggle {
+  display: flex;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.sectionToggle svg {
+  margin: 0;
+  transition: transform 0.15s;
+}
+
+.sectionToggle[aria-expanded='false'] svg {
+  transform: rotate(-90deg);
+}
+
 .box {
   width: 100%;
   padding: 10px 14px;
@@ -158,9 +181,7 @@
 
   .dictationActions button {
     flex: 1 1 auto;
-    height: 48px;
     white-space: normal;
-    line-height: 18px;
   }
 
   .dictationActions .ghost {

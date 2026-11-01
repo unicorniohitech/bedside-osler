@@ -1,21 +1,39 @@
-import { inlineText, tableRows, VITAL_FIELDS } from '../../lib/noteText'
+import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import { hiddenBlockKeys } from '../blocks/collapsedSections'
+import { inlineText, tableRows, VITAL_FIELDS } from '@/lib/noteText'
 import { SECTION_ICONS } from '../blocks/sectionIcons'
-import type { NoteBlock } from '../../types'
+import type { NoteBlock } from '@/types'
 import s from './NoteReadOnly.module.css'
 
 export function NoteReadOnly({ blocks }: { blocks: NoteBlock[] }) {
+  const [collapsed, setCollapsed] = useState<ReadonlySet<number>>(new Set())
+  const hidden = new Set(hiddenBlockKeys(blocks, (_, i) => collapsed.has(i)))
+  const toggle = (i: number) => {
+    const next = new Set(collapsed)
+    if (!next.delete(i)) next.add(i)
+    setCollapsed(next)
+  }
   return (
     <div className={s.root}>
       {blocks.map((b, i) => {
+        if (hidden.has(i)) return null
         const p = (b.props ?? {}) as Record<string, string>
         switch (b.type) {
           case 'sectionHeader': {
             const Icon = SECTION_ICONS[p.icon] ?? SECTION_ICONS.subjective
             return (
-              <div key={i} className={s.section}>
+              <button
+                key={i}
+                type="button"
+                className={s.section}
+                aria-expanded={!collapsed.has(i)}
+                onClick={() => toggle(i)}
+              >
                 <Icon size={16} strokeWidth={1.5} aria-hidden />
-                {p.title}
-              </div>
+                <span className={s.sectionTitle}>{p.title}</span>
+                <ChevronDown className={s.chevron} size={16} strokeWidth={1.5} aria-hidden />
+              </button>
             )
           }
           case 'vitals':

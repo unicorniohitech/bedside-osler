@@ -1,10 +1,10 @@
 import { Lock, Plus } from 'lucide-react'
-import { formatDateTime } from '../../lib/dates'
-import { firstLine } from '../../lib/noteText'
+import { formatDateTime } from '@/lib/dates'
+import { firstLine } from '@/lib/noteText'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
-export function Historico({ evolution, note, onSelectNote, onNewNote }: ToolProps) {
+export function NoteHistory({ evolution, note, onSelectNote, onNewNote }: ToolProps) {
   return (
     <div className={s.fill}>
       <div className={s.row}>

@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 import { Search, TriangleAlert } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { hasText } from '../../lib/noteText'
-import { TEMPLATES } from '../../mocks/templates'
-import type { NoteBlock } from '../../types'
+import { hasText } from '@/lib/noteText'
+import { TEMPLATES } from '@/mocks/templates'
+import type { NoteBlock } from '@/types'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 

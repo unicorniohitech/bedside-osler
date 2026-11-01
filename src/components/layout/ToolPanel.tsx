@@ -1,7 +1,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
-import { useIsMobile } from '../../lib/useIsMobile'
+import { useIsMobile } from '@/lib/useIsMobile'
 import { TOOLS, type ToolId } from '../tools/registry'
 import { focusContent } from '../ui/Dialog'
 import s from './ToolPanel.module.css'

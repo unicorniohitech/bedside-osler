@@ -9,7 +9,7 @@ export const CONTEXT_LABEL: Record<Context, string> = {
   outro: 'Outro',
 }
 
-export const SEX_LABEL: Record<Sex, string> = { F: 'feminino', M: 'masculino' }
+export const SEX_LABEL: Record<Sex, string> = { F: 'Feminino', M: 'Masculino' }
 
 export const displayName = (p: Patient) => p.patient_name || p.patient_initials || ''
 

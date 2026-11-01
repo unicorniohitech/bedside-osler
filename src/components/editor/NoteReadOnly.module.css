@@ -16,6 +16,26 @@
   font-weight: 700;
   line-height: 18px;
   letter-spacing: var(--track-bold);
+  width: 100%;
+  border-width: 0 0 1px;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sectionTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.section .chevron {
+  margin: 0;
+  transition: transform 0.15s;
+}
+
+.section[aria-expanded='false'] .chevron {
+  transform: rotate(-90deg);
 }
 
 .section:first-child {

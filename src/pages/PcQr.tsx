@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
 import { Monitor, Smartphone } from 'lucide-react'
-import { Watermark } from '../components/layout/Watermark'
+import { Watermark } from '@/components/layout/Watermark'
 import { isCapture } from '../lib/capture'
 import s from './PcQr.module.css'
 

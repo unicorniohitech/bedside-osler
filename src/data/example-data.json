@@ -1,6 +1,6 @@
 {
-  "sobre": "Pacientes e notas inventados. Formato das respostas da API de evoluções do Bedside em 28/10/2026. As notas usam o formato de blocos do editor (BlockNote): paragraph, bulletListItem e os blocos próprios sectionHeader, vitals, dictation e calcResult. Datas em UTC; o app mostra no horário de São Paulo.",
-  "lista": [
+  "about": "Pacientes e notas inventados. Formato das respostas da API de evoluções do Bedside em 28/10/2026. As notas usam o formato de blocos do editor (BlockNote): paragraph, bulletListItem e os blocos próprios sectionHeader, vitals, dictation e calcResult. Datas em UTC; o app mostra no horário de São Paulo.",
+  "list": [
     {
       "id": "maria",
       "owner_id": "u-medico",
@@ -15,7 +15,7 @@
       "patient_bed": "412B",
       "patient_record": "2024118734",
       "context": "enfermaria",
-      "health_status": "atencao",
+      "health_status": "attention",
       "updated_at": "2026-10-28T10:40:00Z",
       "last_note_at": "2026-10-28T10:40:00Z",
       "last_note_locked_at": null
@@ -31,7 +31,7 @@
       "patient_sex": "M",
       "patient_bed": "410A",
       "context": "enfermaria",
-      "health_status": "grave",
+      "health_status": "severe",
       "updated_at": "2026-10-28T11:22:00Z",
       "last_note_at": "2026-10-28T11:22:00Z",
       "last_note_locked_at": null
@@ -47,7 +47,7 @@
       "patient_sex": "M",
       "patient_bed": "UTI 7",
       "context": "uti",
-      "health_status": "critico",
+      "health_status": "critical",
       "updated_at": "2026-10-28T09:15:00Z",
       "last_note_at": "2026-10-28T09:15:00Z",
       "last_note_locked_at": null
@@ -64,7 +64,7 @@
       "patient_bed": "305A",
       "patient_record": "2026093310",
       "context": "enfermaria",
-      "health_status": "em_observacao",
+      "health_status": "under_observation",
       "updated_at": "2026-10-28T10:31:00Z",
       "last_note_at": "2026-10-28T10:05:00Z",
       "last_note_locked_at": "2026-10-28T10:31:00Z"
@@ -79,7 +79,7 @@
       "patient_age": 31,
       "patient_sex": "F",
       "context": "ps",
-      "health_status": "grave",
+      "health_status": "severe",
       "updated_at": "2026-10-28T12:05:00Z",
       "last_note_at": null,
       "last_note_locked_at": null
@@ -96,7 +96,7 @@
       "patient_sex": "F",
       "patient_bed": "401",
       "context": "enfermaria",
-      "health_status": "critico",
+      "health_status": "critical",
       "updated_at": "2026-10-27T20:02:00Z",
       "last_note_at": "2026-10-27T19:40:00Z",
       "last_note_locked_at": "2026-10-27T20:02:00Z"
@@ -112,13 +112,13 @@
       "patient_sex": "M",
       "patient_bed": "402B",
       "context": "enfermaria",
-      "health_status": "critico",
+      "health_status": "critical",
       "updated_at": "2026-10-21T13:30:00Z",
       "last_note_at": "2026-10-21T13:00:00Z",
       "last_note_locked_at": "2026-10-21T13:30:00Z"
     }
   ],
-  "evolucoes": {
+  "evolutions": {
     "maria": {
       "id": "maria",
       "owner_id": "u-medico",
@@ -132,7 +132,7 @@
       "patient_bed": "412B",
       "patient_record": "2024118734",
       "context": "enfermaria",
-      "health_status": "critico",
+      "health_status": "critical",
       "notes": [
         {
           "id": "n-maria-4",
@@ -731,7 +731,7 @@
       "patient_sex": "M",
       "patient_bed": "410A",
       "context": "enfermaria",
-      "health_status": "grave",
+      "health_status": "severe",
       "notes": [
         {
           "id": "n-francisco-1",
@@ -779,7 +779,7 @@
       "patient_sex": "M",
       "patient_bed": "UTI 7",
       "context": "uti",
-      "health_status": "critico",
+      "health_status": "critical",
       "notes": [
         {
           "id": "n-jrs-1",
@@ -828,7 +828,7 @@
       "patient_bed": "305A",
       "patient_record": "2026093310",
       "context": "enfermaria",
-      "health_status": "em_observacao",
+      "health_status": "under_observation",
       "notes": [
         {
           "id": "n-antonio-1",
@@ -897,7 +897,7 @@
       "patient_age": 31,
       "patient_sex": "F",
       "context": "ps",
-      "health_status": "grave",
+      "health_status": "severe",
       "notes": []
     },
     "helena": {
@@ -911,7 +911,7 @@
       "patient_sex": "F",
       "patient_bed": "401",
       "context": "enfermaria",
-      "health_status": "critico",
+      "health_status": "critical",
       "notes": [
         {
           "id": "n-helena-1",
@@ -959,7 +959,7 @@
       "patient_sex": "M",
       "patient_bed": "402B",
       "context": "enfermaria",
-      "health_status": "critico",
+      "health_status": "critical",
       "notes": [
         {
           "id": "n-roberto-1",

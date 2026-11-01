@@ -7,7 +7,7 @@ const section = (title: string, icon: string): NoteBlock => ({
 const text: NoteBlock = { type: 'paragraph' }
 const vitals: NoteBlock = { type: 'vitals' }
 
-// Nomes e descrições da tela 43. O conteúdo não aparece nas imagens: usa os títulos de seção de dados-exemplo.json.
+// Nomes e descrições da tela 43. O conteúdo não aparece nas imagens: usa os títulos de seção de example-data.json.
 export const TEMPLATES = [
   {
     id: 'soap',
@@ -25,7 +25,7 @@ export const TEMPLATES = [
     ],
   },
   {
-    id: 'anamnese',
+    id: 'anamnesis',
     name: 'Anamnese',
     description: 'Anamnese completa para primeiro atendimento',
     blocks: [
@@ -42,13 +42,13 @@ export const TEMPLATES = [
     ],
   },
   {
-    id: 'exame',
+    id: 'physical_exam',
     name: 'Exame físico',
     description: 'Exame físico geral por sistemas',
     blocks: [section('Exame físico', 'physical_exam'), text],
   },
   {
-    id: 'diaria',
+    id: 'daily',
     name: 'Evolução diária',
     description: 'Evolução diária de paciente internado',
     blocks: [
@@ -65,7 +65,7 @@ export const TEMPLATES = [
     ],
   },
   {
-    id: 'alta',
+    id: 'discharge',
     name: 'Alta hospitalar',
     description: 'Resumo de alta hospitalar',
     blocks: [section('Resumo de alta', 'discharge'), text],

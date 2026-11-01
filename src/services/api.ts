@@ -1,4 +1,4 @@
-import data from '../data/dados-exemplo.json'
+import data from '../data/example-data.json'
 import { NOW_ISO } from '../lib/clock'
 import { isCapture } from '../lib/capture'
 import { SUMMARIES } from '../mocks/ai'
@@ -6,8 +6,8 @@ import type { Evolution, NewPatientInput, Note, NoteBlock, PatientListItem } fro
 
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T
 
-const list = clone(data.lista) as unknown as PatientListItem[]
-const evolutions = clone(data.evolucoes) as unknown as Record<string, Evolution>
+const list = clone(data.list) as unknown as PatientListItem[]
+const evolutions = clone(data.evolutions) as unknown as Record<string, Evolution>
 let seq = 0
 
 const wait = <T>(value: T): Promise<T> => {
@@ -38,7 +38,7 @@ export const api = {
 
   createPatient(input: NewPatientInput) {
     seq += 1
-    const id = `novo-${seq}`
+    const id = `new-${seq}`
     const base = { id, owner_id: 'u-medico', title: null, created_at: NOW_ISO, archived_at: null, ...input }
     list.unshift({ ...base, updated_at: NOW_ISO, last_note_at: null, last_note_locked_at: null })
     evolutions[id] = { ...base, notes: [] }
@@ -48,7 +48,7 @@ export const api = {
   createNote(id: string, content: NoteBlock[] = [{ type: 'paragraph' }]) {
     seq += 1
     const note: Note = {
-      id: `n-${id}-novo-${seq}`,
+      id: `n-${id}-new-${seq}`,
       evolution_id: id,
       content,
       vitals: null,
@@ -74,7 +74,7 @@ export const api = {
     return wait(note)
   },
 
-  finalizeNote(id: string, noteId: string) {
+  finishNote(id: string, noteId: string) {
     const note = requireNote(id, noteId)
     note.locked_at = NOW_ISO
     note.updated_at = NOW_ISO

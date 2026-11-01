@@ -1,11 +1,12 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import '@blocknote/mantine/style.css'
 import { pt } from '@blocknote/core/locales'
 import { BlockNoteView } from '@blocknote/mantine'
 import { SuggestionMenuController, useCreateBlockNote, type SuggestionMenuProps } from '@blocknote/react'
 import { SuggestionMenu, filterSuggestionItems } from '@blocknote/core/extensions'
+import { collapsedSections, hiddenBlockKeys, sectionHeaderOf } from '../blocks/collapsedSections'
 import { schema, type BedsideEditor } from '../blocks/schema'
-import type { NoteBlock } from '../../types'
+import type { NoteBlock } from '@/types'
 import type { ToolId } from '../tools/registry'
 import { SlashMenu } from './SlashMenu'
 import { buildSlashItems, type SlashItem } from './slashItems'
@@ -25,7 +26,7 @@ type Partial = Parameters<BedsideEditor['insertBlocks']>[0]
 
 interface Props {
   content: NoteBlock[]
-  barra: string | null
+  slash: string | null
   onChange: (doc: NoteBlock[]) => void
   onOpenTool: (t: ToolId) => void
 }
@@ -42,6 +43,31 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
   const onChange = useRef(props.onChange)
   onChange.current = props.onChange
 
+  const [hiddenCss, setHiddenCss] = useState('')
+  const updateHidden = useCallback(() => {
+    const blocks = editor.document
+    const { ids } = collapsedSections(editor)
+    setHiddenCss(
+      hiddenBlockKeys(blocks, (b) => ids.has(b.id))
+        .map((i) => `.bn-block-outer[data-id="${CSS.escape(blocks[i].id)}"]{display:none}`)
+        .join(''),
+    )
+  }, [editor])
+  useEffect(() => {
+    updateHidden()
+    return collapsedSections(editor).subscribe(updateHidden)
+  }, [editor, updateHidden])
+
+  // O cursor nunca fica escondido: ao chegar numa seção recolhida, ela abre.
+  const cursorBlock = useRef<string | null>(null)
+  const revealCursor = useCallback(() => {
+    const { id, type } = editor.getTextCursorPosition().block
+    if (id === cursorBlock.current) return
+    cursorBlock.current = id
+    const header = type === 'sectionHeader' ? undefined : sectionHeaderOf(editor.document, id)
+    if (header) collapsedSections(editor).set(header.id, false)
+  }, [editor])
+
   useImperativeHandle(
     ref,
     () => ({
@@ -50,6 +76,8 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
         const at =
           editor.getSelection()?.blocks.at(-1) ?? editor.getTextCursorPosition().block ?? doc[doc.length - 1]
         editor.insertBlocks(blocks as Partial, at, 'after')
+        cursorBlock.current = null
+        revealCursor()
       },
       replaceAll(blocks) {
         editor.replaceBlocks(editor.document, blocks as Partial)
@@ -62,10 +90,10 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
       },
       document: () => editor.document as unknown as NoteBlock[],
     }),
-    [editor],
+    [editor, revealCursor],
   )
 
-  const scrollToEnd = props.barra === 'bedside'
+  const scrollToEnd = props.slash === 'bedside'
   const Menu = useMemo(
     () =>
       function Menu(p: SuggestionMenuProps<SlashItem>) {
@@ -76,9 +104,9 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
 
   const items = useMemo(() => buildSlashItems(editor, (t) => onOpenTool.current(t)), [editor])
 
-  // ?barra= abre o menu do / depois do primeiro parágrafo, como nas telas 16-18.
+  // ?slash= abre o menu do / depois do primeiro parágrafo, como nas telas 16-18.
   useEffect(() => {
-    if (!props.barra) return
+    if (!props.slash) return
     const timer = setTimeout(() => {
       const anchor = editor.document.find((b) => b.type === 'paragraph')
       if (!anchor) return
@@ -89,32 +117,39 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
       document.execCommand('insertText', false, '/')
     }, 30)
     return () => clearTimeout(timer)
-  }, [editor, props.barra])
+  }, [editor, props.slash])
 
   return (
-    <BlockNoteView
-      className={s.editor}
-      editor={editor as never}
-      theme="light"
-      slashMenu={false}
-      sideMenu={false}
-      formattingToolbar={false}
-      linkToolbar={false}
-      filePanel={false}
-      tableHandles={false}
-      onChange={() => onChange.current(editor.document as unknown as NoteBlock[])}
-    >
-      <SuggestionMenuController<(q: string) => Promise<SlashItem[]>>
-        triggerCharacter="/"
-        getItems={async (q) => filterSuggestionItems(items, q)}
-        suggestionMenuComponent={Menu}
-        onItemClick={(item) => {
-          const menu = editor.getExtension(SuggestionMenu)
-          menu?.closeMenu()
-          menu?.clearQuery()
-          item.onItemClick()
+    <>
+      <style>{hiddenCss}</style>
+      <BlockNoteView
+        className={s.editor}
+        editor={editor as never}
+        theme="light"
+        slashMenu={false}
+        sideMenu={false}
+        formattingToolbar={false}
+        linkToolbar={false}
+        filePanel={false}
+        tableHandles={false}
+        onChange={() => {
+          updateHidden()
+          onChange.current(editor.document as unknown as NoteBlock[])
         }}
-      />
-    </BlockNoteView>
+        onSelectionChange={revealCursor}
+      >
+        <SuggestionMenuController<(q: string) => Promise<SlashItem[]>>
+          triggerCharacter="/"
+          getItems={async (q) => filterSuggestionItems(items, q)}
+          suggestionMenuComponent={Menu}
+          onItemClick={(item) => {
+            const menu = editor.getExtension(SuggestionMenu)
+            menu?.closeMenu()
+            menu?.clearQuery()
+            item.onItemClick()
+          }}
+        />
+      </BlockNoteView>
+    </>
   )
 })

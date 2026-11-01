@@ -1,17 +1,21 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import * as Select from '@radix-ui/react-select'
-import { ArrowRight, ChevronDown, Users } from 'lucide-react'
-import { AppHeader } from '../components/layout/AppHeader'
-import { Watermark } from '../components/layout/Watermark'
-import { Button } from '../components/ui/Button'
-import { Segmented } from '../components/ui/Segmented'
-import { formatInitials } from '../lib/iniciais'
-import { CONTEXT_LABEL } from '../lib/patient'
-import { api } from '../services/api'
-import type { Context, Sex } from '../types'
-import btn from '../components/ui/Button.module.css'
+import { ArrowRight, Users } from 'lucide-react'
+import { AppHeader } from '@/components/layout/AppHeader'
+import { Watermark } from '@/components/layout/Watermark'
+import { Button } from '@/components/ui/Button'
+import { Select } from '@/components/ui/Select'
+import { formatInitials } from '@/lib/initials'
+import { CONTEXT_LABEL } from '@/lib/patient'
+import { api } from '@/services/api'
+import type { Context, Sex } from '@/types'
+import btn from '@/components/ui/Button.module.css'
 import s from './NewPatient.module.css'
+
+const SEX_OPTIONS: { value: Sex; label: string }[] = [
+  { value: 'F', label: 'Feminino' },
+  { value: 'M', label: 'Masculino' },
+]
 
 const CONTEXTS = (['ps', 'enfermaria', 'uti', 'ambulatorio', 'consultorio', 'outro'] as Context[]).map(
   (value) => ({
@@ -49,7 +53,7 @@ function Field(props: {
 
 export function NewPatient() {
   const [params] = useSearchParams()
-  const sample = params.has('exemplo')
+  const sample = params.has('sample')
   const navigate = useNavigate()
   const [context, setContext] = useState<Context>(sample ? 'ps' : 'enfermaria')
   const [name, setName] = useState(sample ? 'Luana Beatriz Moreira Costa' : '')
@@ -84,9 +88,20 @@ export function NewPatient() {
               Adicionar paciente
             </h2>
             <p className={s.sub}>Informe pelo menos o nome ou as iniciais. Você pode editar tudo depois.</p>
-
-            <span className={s.ctxLabel}>Contexto clínico</span>
-            <Segmented label="Contexto clínico" value={context} options={CONTEXTS} onChange={setContext} />
+            <div className={s.ctxSelect}>
+              <label className={s.ctxLabel} id="sexo-label">
+                <b>Contexto clínico</b>
+              </label>
+              <Select
+                value={context}
+                onChange={setContext}
+                options={CONTEXTS}
+                placeholder="Selecione..."
+                labelledBy="sexo-label"
+              />
+            </div>
+            {/* <span className={s.ctxLabel}>Contexto clínico</span>
+            <Segmented label="Contexto clínico" value={context} options={CONTEXTS} onChange={setContext} /> */}
 
             <div className={s.row2}>
               <Field
@@ -98,7 +113,7 @@ export function NewPatient() {
                 onChange={setName}
               />
               <Field
-                id="iniciais"
+                id="initials"
                 label="Iniciais"
                 hint="Opcional se houver nome"
                 placeholder="Ex: J.S.M."
@@ -120,31 +135,18 @@ export function NewPatient() {
                 <label className={s.labelRow} id="sexo-label">
                   <b>Sexo</b>
                 </label>
-                <Select.Root value={sex} onValueChange={(v) => setSex(v as Sex)}>
-                  <Select.Trigger className={`${s.input} ${s.select}`} aria-labelledby="sexo-label">
-                    <Select.Value placeholder="Selecione..." />
-                    <Select.Icon>
-                      <ChevronDown size={16} strokeWidth={1.5} color="#6c6c6c" aria-hidden />
-                    </Select.Icon>
-                  </Select.Trigger>
-                  <Select.Portal>
-                    <Select.Content className={s.selectContent} position="popper" sideOffset={4}>
-                      <Select.Viewport>
-                        <Select.Item value="F" className={s.selectItem}>
-                          <Select.ItemText>Feminino</Select.ItemText>
-                        </Select.Item>
-                        <Select.Item value="M" className={s.selectItem}>
-                          <Select.ItemText>Masculino</Select.ItemText>
-                        </Select.Item>
-                      </Select.Viewport>
-                    </Select.Content>
-                  </Select.Portal>
-                </Select.Root>
+                <Select
+                  value={sex}
+                  onChange={setSex}
+                  options={SEX_OPTIONS}
+                  placeholder="Selecione..."
+                  labelledBy="sexo-label"
+                />
               </div>
-              <Field id="leito" label="Leito" placeholder="Ex: 12B" value={bed} onChange={setBed} />
             </div>
 
-            <div className={s.recordRow}>
+            <div className={s.row3}>
+              <Field id="bed" label="Leito" placeholder="Ex: 12B" value={bed} onChange={setBed} />
               <Field
                 id="prontuario"
                 label="Prontuário"

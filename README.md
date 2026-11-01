@@ -1,7 +1,7 @@
 # Réplica da tela de Evoluções do Bedside
 
 Protótipo em React que reproduz a versão atual da tela, conforme as 54 imagens de
-`../teste-evolucoes-bedside/telas/`. Não tem backend: `src/services/api.ts` lê `src/data/dados-exemplo.json` e guarda as
+`../teste-evolucoes-bedside/telas/`. Não tem backend: `src/services/api.ts` lê `src/data/example-data.json` e guarda as
 alterações em memória, com atraso de 300 a 800 ms. Ao recarregar a página, os dados voltam ao original.
 
 ## Rodar
@@ -22,7 +22,7 @@ Abra `http://localhost:5173`.
 
 `pnpm compare` usa o Chrome instalado na máquina e espera a pasta `teste-evolucoes-bedside/` ao lado deste projeto. A
 porcentagem de cada imagem é a fração de pixels com diferença acima de 32/255; o resultado completo vai para
-`compare/resultado.txt`.
+`compare/result.txt`.
 
 ## Rotas e estados
 
@@ -33,32 +33,32 @@ Os parâmetros servem para chegar direto a cada estado. Telas de celular usam a 
 |---|---|---|
 | `/evolucoes` | Lista | 01, 02 |
 | `?menu=maria` | Menu ⋮ aberto | 03, 04 |
-| `?resumo=maria` | Resumo da IA no card | 05 |
-| `?arquivados=1&menu=roberto` | Arquivados ligado, com menu | 06 |
-| `?busca=Valdemar` | Busca sem resultado | 07 |
-| `?estado=vazio` | Primeiro acesso | 08 |
-| `?estado=carregando` | Carregando | 09 |
-| `/evolucoes/novo` | Adicionar paciente; `?exemplo=1` preenche | 10, 11, 12 |
-| `/evolucoes/:id` | Editor; `?nota=:noteId` abre outra nota | 13, 14, 20, 21 |
-| `?rail=aberta` | Faixa de ferramentas aberta | 15 |
-| `?barra=topo`, `?barra=bedside` | Menu do `/`, no início e no fim | 16, 17, 18 |
-| `?simularErro=1` | Erro no salvamento automático | 19 |
-| `?dialogo=finalizar`, `?dialogo=excluir` | Diálogos | 22, 23, 24 |
+| `?summary=maria` | Resumo da IA no card | 05 |
+| `?archived=1&menu=roberto` | Arquivados ligado, com menu | 06 |
+| `?search=Valdemar` | Busca sem resultado | 07 |
+| `?state=empty` | Primeiro acesso | 08 |
+| `?state=loading` | Carregando | 09 |
+| `/evolucoes/novo` | Adicionar paciente; `?sample=1` preenche | 10, 11, 12 |
+| `/evolucoes/:id` | Editor; `?note=:noteId` abre outra nota | 13, 14, 20, 21 |
+| `?rail=open` | Faixa de ferramentas aberta | 15 |
+| `?slash=top`, `?slash=bedside` | Menu do `/`, no início e no fim | 16, 17, 18 |
+| `?simulateError=1` | Erro no salvamento automático | 19 |
+| `?dialog=finish`, `?dialog=delete` | Diálogos | 22, 23, 24 |
 | `/evolucoes/luana` | Paciente sem evolução | 25, 26 |
-| `?painel=historico` | Histórico | 27, 28 |
-| `?painel=companion`, `&analisado=1`, `&aba=pontos` | Osler Companion | 29 a 32 |
-| `?painel=passar`, `&gerado=1` | Passar caso | 33, 34, 35 |
-| `?painel=fluxograma` | Fluxograma de lab | 36, 37 |
-| `?painel=cid&busca=pneumonia&sel=J18.9,J44.1` | CID-10 | 38, 39 |
-| `?painel=calc`, `&calc=curb65` | Calculadoras | 40, 41, 42 |
-| `?painel=templates`, `&template=soap` | Templates | 43, 44, 45 |
-| `?painel=lme` | LME / APAC | 46, 47 |
-| `?painel=arquivar` | Arquivar paciente | 48, 49 |
-| `?pc=escanear`, `?pc=confirmar` | Abrir no computador | 50, 51, 52 |
+| `?panel=history` | Histórico | 27, 28 |
+| `?panel=companion`, `&analisado=1`, `&aba=pontos` | Osler Companion | 29 a 32 |
+| `?panel=handoff`, `&gerado=1` | Passar caso | 33, 34, 35 |
+| `?panel=flowchart` | Fluxograma de lab | 36, 37 |
+| `?panel=cid&search=pneumonia&selected=J18.9,J44.1` | CID-10 | 38, 39 |
+| `?panel=calc`, `&calc=curb65` | Calculadoras | 40, 41, 42 |
+| `?panel=templates`, `&template=soap` | Templates | 43, 44, 45 |
+| `?panel=lme` | LME / APAC | 46, 47 |
+| `?panel=archive` | Arquivar paciente | 48, 49 |
+| `?pc=scan`, `?pc=confirm` | Abrir no computador | 50, 51, 52 |
 | `/bedside-pc` | QR no computador | 53 |
 | `/bedside-pc/sessao` | Computador conectado | 54 |
 
-`?captura=1` zera os atrasos da API e esconde o botão "Simular leitura". É o que `pnpm compare` usa.
+`?capture=1` zera os atrasos da API e esconde o botão "Simular leitura". É o que `pnpm compare` usa.
 
 ## Decisões
 

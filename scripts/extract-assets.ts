@@ -4,8 +4,8 @@ import { PNG } from 'pngjs'
 import potrace from 'potrace'
 import jsQR from 'jsqr'
 
-const TELAS = '../teste-evolucoes-bedside/telas/'
-const src = PNG.sync.read(fs.readFileSync(TELAS + '53-PC-QR.png'))
+const SCREENS = '../teste-evolucoes-bedside/telas/'
+const src = PNG.sync.read(fs.readFileSync(SCREENS + '53-PC-QR.png'))
 
 function crop(x: number, y: number, w: number, h: number) {
   const out = new PNG({ width: w, height: h })
@@ -28,8 +28,6 @@ potrace.trace(tmp, { threshold: 128, turdSize: 4 }, (err: Error | null, svg: str
   if (err) throw err
   const d = /d="([^"]+)"/.exec(svg)![1]
   fs.writeFileSync('src/assets/osler-signature.path.txt', d)
-  console.log('path length', d.length)
 })
 
 const qr = jsQR(new Uint8ClampedArray(src.data), src.width, src.height)
-console.log('QR:', qr?.data, 'versao', qr?.version)

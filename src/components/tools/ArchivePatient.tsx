@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { TriangleAlert } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { displayName } from '../../lib/patient'
-import { api } from '../../services/api'
+import { displayName } from '@/lib/patient'
+import { api } from '@/services/api'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
-export function Arquivar({ evolution, onClose }: ToolProps) {
+export function ArchivePatient({ evolution, onClose }: ToolProps) {
   const navigate = useNavigate()
   const name = displayName(evolution)
   const archive = () => void api.setArchived(evolution.id, true).then(() => navigate('/evolucoes'))

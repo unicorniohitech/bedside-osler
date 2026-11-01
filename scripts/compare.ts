@@ -7,7 +7,7 @@ import { chromium, type Page } from 'playwright'
 import { PNG } from 'pngjs'
 import { SCENES } from './scenes'
 
-const TELAS = path.resolve('../teste-evolucoes-bedside/telas')
+const SCREENS = path.resolve('../teste-evolucoes-bedside/telas')
 const OUT = path.resolve('compare')
 const PORT = 5199
 const BASE = `http://localhost:${PORT}`
@@ -80,8 +80,8 @@ async function main() {
   try {
     const isWanted = wanted(process.argv.slice(2))
     for (const scene of SCENES.filter((s) => isWanted(s.n))) {
-      const file = fs.readdirSync(TELAS).find((f) => f.startsWith(String(scene.n).padStart(2, '0') + '-'))!
-      const original = PNG.sync.read(fs.readFileSync(path.join(TELAS, file)))
+      const file = fs.readdirSync(SCREENS).find((f) => f.startsWith(String(scene.n).padStart(2, '0') + '-'))!
+      const original = PNG.sync.read(fs.readFileSync(path.join(SCREENS, file)))
       const ctx = await browser.newContext({
         viewport: { width: original.width, height: original.height },
         deviceScaleFactor: 1,
@@ -94,14 +94,13 @@ async function main() {
       const { out, pct } = sideBySide(original, PNG.sync.read(buf))
       fs.writeFileSync(path.join(OUT, file), PNG.sync.write(out))
       results.push(`${file.padEnd(34)} ${pct.toFixed(2).padStart(6)}%`)
-      console.log(results.at(-1))
     }
   } finally {
     await browser.close()
     process.kill(-server.pid!)
   }
   if (results.length === SCENES.length)
-    fs.writeFileSync(path.join(OUT, 'resultado.txt'), results.join('\n') + '\n')
+    fs.writeFileSync(path.join(OUT, 'result.txt'), results.join('\n') + '\n')
 }
 
 main().catch((e) => {

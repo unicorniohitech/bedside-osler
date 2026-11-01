@@ -11,18 +11,22 @@ import {
   Users,
   X,
 } from 'lucide-react'
-import { AppHeader } from '../components/layout/AppHeader'
-import { Watermark } from '../components/layout/Watermark'
-import { Badge } from '../components/ui/Badge'
-import { Menu, MenuItem } from '../components/ui/Menu'
-import { Switch } from '../components/ui/Switch'
-import { formatDateTime } from '../lib/dates'
-import { SEX_LABEL, displayName, sectorLine } from '../lib/patient'
-import { api } from '../services/api'
-import { SUMMARIES } from '../mocks/ai'
-import type { PatientListItem } from '../types'
-import btn from '../components/ui/Button.module.css'
+import { AppHeader } from '@/components/layout/AppHeader'
+import { Avatar } from '@/components/ui/Avatar'
+import { Watermark } from '@/components/layout/Watermark'
+import { Badge } from '@/components/ui/Badge'
+import { Menu, MenuItem } from '@/components/ui/Menu'
+import { Switch } from '@/components/ui/Switch'
+import { formatDateTime } from '@/lib/dates'
+import { SEX_LABEL, displayName, sectorLine } from '@/lib/patient'
+import { api } from '@/services/api'
+import { SUMMARIES } from '@/mocks/ai'
+import { type PatientListItem } from '@/types'
+import btn from '@/components/ui/Button.module.css'
 import s from './PatientList.module.css'
+import { Row } from '@/components/ui/Row'
+import { Column } from '@/components/ui/Column'
+import { Divider } from '@/components/ui/Divider'
 
 function primaryAction(p: PatientListItem) {
   if (!p.last_note_at) return { label: 'Iniciar', Icon: Plus }
@@ -42,30 +46,48 @@ function PatientCard(props: {
   const action = primaryAction(p)
   return (
     <article className={s.card}>
-      <div className={s.name}>
-        {displayName(p)}
-        {p.archived_at && <Badge tone="archived">Arquivado</Badge>}
-      </div>
-      <div className={s.sector}>{sectorLine(p)}</div>
+      <Row gap={8} align="center" justify="center">
+        <Avatar src={p.photo_avatar} className={s.user} status={p.health_status} />
+      </ Row>
+      <Row gap={8} align="center" justify="center">
+        <Column gap={4} align="center" justify="center">
+          <div className={s.name}>
+            {displayName(p)}
+            {p.archived_at && <Badge tone="archived">Arquivado</Badge>}
+          </div>
+          <div className={s.sector}>{sectorLine(p)}</div>
+        </Column>
+      </ Row>
       <div className={s.meta}>
-        {p.patient_age != null && (
-          <span>
-            <b>Idade:</b> {p.patient_age} anos
-          </span>
-        )}
-        {p.patient_sex && (
-          <span>
-            <b>Sexo:</b> {SEX_LABEL[p.patient_sex]}
-          </span>
-        )}
-        {p.patient_record && (
-          <span>
-            <b>Prontuário:</b> {p.patient_record}
-          </span>
-        )}
-        <span>
-          <b>Atualizado:</b> {formatDateTime(p.updated_at)}
-        </span>
+        <Column gap={8} align="start" justify="start">
+          {p.patient_age != null && (
+            <span>
+              <b>Idade:</b> {p.patient_age} anos
+            </span>
+          )}
+          {p.patient_record && (
+            <span>
+              <b>Prontuário:</b> {p.patient_record}
+            </span>
+          )}
+          {(!p.patient_record && p.updated_at) && (
+            <span>
+              <b>Atualizado:</b> {formatDateTime(p.updated_at)}
+            </span>
+          )}
+        </Column>
+        <Column gap={8} align="start" justify="start">
+          {p.patient_sex && (
+            <span>
+              <b>Sexo:</b> {SEX_LABEL[p.patient_sex]}
+            </span>
+          )}
+          {(p.patient_record && p.updated_at) && (
+            <span>
+              <b>Atualizado:</b> {formatDateTime(p.updated_at)}
+            </span>
+          )}
+        </Column>
       </div>
       {props.summary && <div className={s.summary}>{props.summary}</div>}
       <Menu
@@ -80,6 +102,7 @@ function PatientCard(props: {
           <action.Icon size={16} strokeWidth={1.5} aria-hidden />
           {action.label}
         </MenuItem>
+        <Divider />
         <MenuItem onSelect={props.onSummary}>
           <Sparkles size={16} strokeWidth={1.5} aria-hidden />
           Gerar resumo
@@ -97,25 +120,25 @@ function PatientCard(props: {
 
 export function PatientList() {
   const [params] = useSearchParams()
-  const estado = params.get('estado')
+  const viewState = params.get('state')
   const menuParam = params.get('menu')
   const [patients, setPatients] = useState<PatientListItem[] | null>(null)
-  const [query, setQuery] = useState(params.get('busca') ?? '')
-  const [showArchived, setShowArchived] = useState(params.has('arquivados'))
-  const resumoParam = params.get('resumo')
+  const [query, setQuery] = useState(params.get('search') ?? '')
+  const [showArchived, setShowArchived] = useState(params.has('archived'))
+  const summaryParam = params.get('summary')
   const [summaries, setSummaries] = useState<Record<string, string>>(
-    resumoParam ? { [resumoParam]: SUMMARIES[resumoParam] } : {},
+    summaryParam ? { [summaryParam]: SUMMARIES[summaryParam] } : {},
   )
 
   const load = () => void api.listPatients().then(setPatients)
   useEffect(() => {
-    if (estado === 'carregando') return
-    if (estado === 'vazio') {
+    if (viewState === 'loading') return
+    if (viewState === 'empty') {
       setPatients([])
       return
     }
     load()
-  }, [estado])
+  }, [viewState])
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()

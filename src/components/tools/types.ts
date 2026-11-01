@@ -1,4 +1,4 @@
-import type { Evolution, Note } from '../../types'
+import type { Evolution, Note } from '@/types'
 import type { EditorApi } from '../editor/NoteEditor'
 
 export interface ToolProps {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { CircleCheck, Clock, LogOut, Monitor } from 'lucide-react'
-import { Workspace, type WorkspaceHeaderProps } from '../components/editor/Workspace'
-import { Button } from '../components/ui/Button'
+import { Workspace, type WorkspaceHeaderProps } from '@/components/editor/Workspace'
+import { Button } from '@/components/ui/Button'
 import { displayName } from '../lib/patient'
 import s from './PcSession.module.css'
 
@@ -13,7 +13,7 @@ function remaining(seconds: number) {
   return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m restantes`
 }
 
-function SessionBar({ evolution, openFinalize }: WorkspaceHeaderProps) {
+function SessionBar({ evolution, openfinish }: WorkspaceHeaderProps) {
   const navigate = useNavigate()
   const [left, setLeft] = useState(SESSION_SECONDS)
   useEffect(() => {
@@ -31,7 +31,7 @@ function SessionBar({ evolution, openFinalize }: WorkspaceHeaderProps) {
           <Clock size={13} strokeWidth={1.75} aria-hidden />
           {remaining(left)}
         </span>
-        <button type="button" className={s.finalize} onClick={openFinalize}>
+        <button type="button" className={s.finish} onClick={openfinish}>
           <CircleCheck size={16} strokeWidth={1.75} aria-hidden />
           Finalizar evolução
         </button>
