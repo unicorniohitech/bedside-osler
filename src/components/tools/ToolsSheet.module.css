@@ -1,0 +1,49 @@
+.group {
+  margin: 4px 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 88px;
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  color: var(--text);
+}
+
+.block svg {
+  color: var(--primary);
+}
+
+.badge {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.separator {
+  margin: 0 0 14px;
+  border: 0;
+  border-top: 1px solid var(--border);
+}

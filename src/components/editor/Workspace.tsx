@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { ToolPanel } from '../layout/ToolPanel'
 import { ToolRail } from '../layout/ToolRail'
 import { ToolsHome } from '../tools/ToolsHome'
+import { ToolsSheet } from '../tools/ToolsSheet'
 import { TOOL_COMPONENTS } from '../tools'
 import type { ToolId } from '../tools/registry'
 import { Button } from '../ui/Button'
@@ -18,6 +19,7 @@ import { api } from '@/services/api'
 import type { Evolution, Note, NoteBlock, PatientListItem } from '@/types'
 import { NoteEditor, type EditorApi } from './NoteEditor'
 import { NoteReadOnly } from './NoteReadOnly'
+import { MobileActionBar } from './MobileActionBar'
 import { PcSheet } from './PcSheet'
 import { TodayPatients } from './TodayPatients'
 import s from './Workspace.module.css'
@@ -57,6 +59,7 @@ export function Workspace(props: {
   const [evolution, setEvolution] = useState<Evolution | null>(null)
   const noteId = params.get('note')
   const [tool, setTool] = useState<ToolId | null>(PANEL_PARAM[params.get('panel') ?? ''] ?? null)
+  const [toolsSheet, setToolsSheet] = useState(false)
   const [cursorSection, setCursorSection] = useState<string | null>(null)
   const [dialog, setDialog] = useState<string | null>(params.get('dialog'))
   const [pc, setPc] = useState<'scan' | 'confirm' | null>(
@@ -179,6 +182,21 @@ export function Workspace(props: {
     noteStatus({ last_note_at: latest?.updated_at ?? null, last_note_locked_at: latest?.locked_at ?? null }) ===
     'none'
 
+  const toolPanel = ActiveTool && tool && (
+    <ToolPanel tool={tool} onClose={() => setTool(null)}>
+      <ActiveTool
+        evolution={evolution}
+        note={note}
+        editor={editorApi}
+        params={params}
+        cursorSection={cursorSection}
+        onSelectNote={selectNote}
+        onNewNote={() => void newNote()}
+        onClose={() => setTool(null)}
+      />
+    </ToolPanel>
+  )
+
   return (
     <div className={s.shell}>
       {props.header({
@@ -195,7 +213,6 @@ export function Workspace(props: {
         {!mobile && !props.pcMode && (
           <TodayPatients patients={ordered} currentId={props.id} doneCount={today.finished.length} />
         )}
-        {mobile && <ToolRail active={tool} onSelect={selectTool} />}
         <main className={s.main}>
           {!note ? (
             <div className={s.center}>
@@ -234,29 +251,38 @@ export function Workspace(props: {
           )}
         </main>
         {!mobile && narrow && <ToolRail active={tool} onSelect={selectTool} />}
-        {(ActiveTool || (!mobile && !narrow)) && (
+        {mobile && ActiveTool && tool && toolPanel}
+        {!mobile && (ActiveTool || !narrow) && (
           <div
             className={`${s.tools} ${tool === 'flowchart' ? s.toolsWide : ''} ${narrow ? s.toolsOverlay : ''}`}
           >
-            {ActiveTool && tool ? (
-              <ToolPanel tool={tool} onClose={() => setTool(null)}>
-                <ActiveTool
-                  evolution={evolution}
-                  note={note}
-                  editor={editorApi}
-                  params={params}
-                  cursorSection={cursorSection}
-                  onSelectNote={selectNote}
-                  onNewNote={() => void newNote()}
-                  onClose={() => setTool(null)}
-                />
-              </ToolPanel>
+            {ActiveTool ? (
+              toolPanel
             ) : (
               <ToolsHome evolution={evolution} onSelectNote={selectNote} onOpenTool={setTool} />
             )}
           </div>
         )}
       </div>
+
+      {mobile && (
+        <MobileActionBar
+          canEdit={Boolean(note) && !locked}
+          onHistory={() => setTool('history')}
+          onTools={() => setToolsSheet(true)}
+          onDictate={() => editorApi.insert([{ type: 'dictation' }])}
+          onFinish={() => setDialog('finish')}
+        />
+      )}
+      {toolsSheet && (
+        <ToolsSheet
+          onClose={() => setToolsSheet(false)}
+          onOpenTool={(id) => {
+            setToolsSheet(false)
+            setTool(id)
+          }}
+        />
+      )}
 
       <Dialog
         open={dialog === 'finish'}

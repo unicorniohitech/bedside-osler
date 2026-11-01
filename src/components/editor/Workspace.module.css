@@ -1,7 +1,7 @@
 .shell {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
   background: var(--card);
 }
 
@@ -125,6 +125,11 @@
 
   .nextPatient {
     margin: 0 16px 24px;
+  }
+
+  .startBar {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .center .first {

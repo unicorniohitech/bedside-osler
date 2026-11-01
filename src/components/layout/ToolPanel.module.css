@@ -41,47 +41,6 @@
   flex-direction: column;
 }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.modal {
-  position: fixed;
-  top: 82px;
-  left: 14px;
-  right: 14px;
-  bottom: 81px;
-  z-index: 41;
-  display: flex;
-  flex-direction: column;
-  padding: 0 21px;
-  border-radius: 20px;
-  background: var(--surface);
-  overflow: hidden;
-  outline: none;
-}
-
-.modalHead {
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  height: 66px;
-  padding: 6px 2px 0 0;
-  color: var(--primary);
-}
-
-.modalTitle {
-  flex: 1;
-  font-size: 17.5px;
-  font-weight: 700;
-  letter-spacing: var(--track-bold);
-  color: var(--text);
-}
-
 .close {
   display: grid;
   place-items: center;

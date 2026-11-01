@@ -55,3 +55,41 @@
   width: 40px;
   padding: 0;
 }
+
+.compact {
+  min-height: 60px;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.compactName {
+  overflow: hidden;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: var(--track-bold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--primary-hover);
+}
+
+.compactMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 8px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-muted);
+}
+
+.mobileStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.error {
+  font-weight: 700;
+  color: var(--danger);
+}
