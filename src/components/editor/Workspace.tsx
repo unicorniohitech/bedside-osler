@@ -242,6 +242,7 @@ export function Workspace(props: {
       <Dialog
         open={dialog === 'finish'}
         onClose={() => setDialog(null)}
+        size="small"
         title="Finalizar evolução"
         icon={<CircleCheck className={dialogIconClass} size={26} strokeWidth={1.75} aria-hidden />}
         footer={

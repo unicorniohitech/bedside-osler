@@ -160,8 +160,8 @@ export function PatientList() {
         {header}
         <Watermark>
           <div className={s.main}>
-            <div className={s.loading} style={{ margin: '0 0 0 -181px' }}>
-              Buscando papel e brigando com a impressora...
+            <div className={s.loading}>
+              Carregando evoluções...
             </div>
           </div>
         </Watermark>
