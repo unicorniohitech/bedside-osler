@@ -5,7 +5,7 @@ lista o que falta na API para a proposta funcionar com dados reais. Os nomes de 
 
 ## Listagem de pacientes
 
-`GET /evolutions` hoje devolve `last_note_at` e `last_note_locked_at`, e o front calcula o status de hoje em
+A listagem hoje devolve `last_note_at` e `last_note_locked_at`, e o front calcula o status de hoje em
 `src/lib/noteStatus.ts`.
 
 | Campo novo | Tipo | Para quê |

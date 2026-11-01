@@ -67,15 +67,8 @@ Em janelas de 768 a 1199 px, o painel de ferramentas recolhe para uma coluna de 
 vieram no pacote. Entre as quatro candidatas, a Plus Jakarta foi a mais próxima na largura do texto. Ajustes de
 `letter-spacing` compensam a diferença e aproximam as quebras de linha das imagens.
 
-**Quando a imagem diverge do pedido, vale a imagem:**
-
-- A tela de carregando (09) é só um texto, sem skeleton.
-- O computador conectado (54) mantém a faixa de ferramentas e o Excluir.
-- O header tem 60 px só na lista e no cadastro.
-- Excluir e Copiar tudo são apenas ícones.
-
-**Defeitos mantidos de propósito:** `Buscar formulário...` literal, "Incluir arquivados" no texto de arquivar contra
-"Mostrar arquivados" no switch, rótulos cortados no segmentado do celular, e a faixa vazia de 60 px à direita.
+**Quando as imagens da proposta divergem do pedido, vale o pedido:** cor primária `#6462A4`, avatares, `health_status` e
+marca d'água são mantidos, mesmo sem aparecer nas imagens de referência.
 
 **Conteúdo que as imagens não mostram:**
 
@@ -85,16 +78,16 @@ vieram no pacote. Entre as quatro candidatas, a Plus Jakarta foi a mais próxima
   a lista tenha 11 itens. O grupo `PNEUMOLOGIA · 1` não aparece nas telas e foi criado para dar acesso ao CURB-65.
 - **Menu do `/`:** o trecho entre `Lista` e `Tabela` não aparece. `Lista numerada`, `Tabela` e `Imagem` foram incluídos a
   partir do pedido e da legenda.
-- **Templates:** o conteúdo usa os títulos de seção dos dados de exemplo, e SOAP usa os nomes da própria descrição. O grupo
+- **Templates:** agora são inseridos no cursor, sem substituir a nota. O conteúdo usa os títulos de seção dos dados de exemplo, e SOAP usa os nomes da própria descrição. O grupo
   de templates do médico só aparece se houver algum, e o mock vem vazio.
 - **Aba Resumo do Companion:** repete o resumo da tela 05.
 - **CID-10:** as descrições cortadas nas imagens foram completadas com os nomes da CID-10; cada código é inserido como
   `J18.9 - Pneumonia não especificada`.
 - **Fluxograma:** o texto "Atualizar na evolução" e o estado de data desmarcada não aparecem nas imagens.
 
-**Detalhes sem imagem, resolvidos da forma mais discreta:** hover, foco e seleção usam fundos neutros e o contorno de foco
-padrão do projeto; as janelas abrem sem animação e com o foco no próprio conteúdo; o editor não mostra alça de arrastar nem
-barra de formatação.
+**Ditado:** o botão do celular insere o bloco de ditado, sem gravar áudio.
+
+**Destaques e prévia:** o trecho dos alertas e a prévia tracejada são só visuais e não alteram o documento da nota.
 
 **Fluxos simulados:** na tela 50, tocar no quadro da câmera simula a leitura do QR. Em `/bedside-pc`, o botão "Simular
 leitura", que não existe nas imagens, abre a sessão. O relógio fica fixo em 28/10/2026, 11:53, para bater com as telas.
