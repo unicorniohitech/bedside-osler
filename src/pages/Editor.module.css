@@ -4,16 +4,23 @@
   flex: none;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 14px 28px;
-  min-height: 73px;
-  padding: 6px 14px 0;
+  gap: 12px;
+  min-height: 72px;
+  padding: 10px 16px;
   background: var(--surface);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .titleBlock {
-  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
 }
 
 .name {
@@ -21,54 +28,30 @@
   font-weight: 700;
   line-height: 24px;
   letter-spacing: var(--track-bold);
-  color: var(--primary);
+  color: var(--primary-hover);
 }
 
 .meta {
-  margin-top: 4px;
-  font-size: 11.3px;
-  line-height: 16px;
-  color: var(--text-faint);
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--text-muted);
 }
 
 .actions {
+  flex: none;
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin-left: auto;
+  gap: 8px;
 }
 
 .actions button {
-  height: 34px;
-  padding: 0 13px;
+  height: 40px;
   border-radius: 10px;
-  font-size: 11px;
-  gap: 7px;
+  font-size: 13px;
 }
 
-.final {
-  display: inline-flex;
-  align-items: center;
-}
-
-@media (max-width: 767px) {
-  .header {
-    padding: 18px 14px 14px;
-    gap: 14px 28px;
-  }
-
-  .actions {
-    margin-top: 0;
-  }
-
-  .actions button {
-    padding: 0 9px;
-    font-size: 9.7px;
-    gap: 6px;
-  }
-
-  .actions button svg {
-    width: 13px;
-    height: 13px;
-  }
+.actions .more {
+  width: 40px;
+  padding: 0;
 }

@@ -16,8 +16,8 @@ export function ArchivePatient({ evolution, onClose }: ToolProps) {
         Tem certeza que deseja arquivar <strong>{name}</strong>?
       </p>
       <p className={s.archiveText}>
-        Arquivar não apaga as evoluções. O paciente continua acessível quando você ativar o filtro{' '}
-        <em>"Incluir arquivados"</em> na lista.
+        Arquivar não apaga as evoluções. O paciente continua acessível na aba <em>Arquivados</em> da
+        lista.
       </p>
       <div className={s.spacer} />
       <div className={s.confirm}>
@@ -26,7 +26,7 @@ export function ArchivePatient({ evolution, onClose }: ToolProps) {
           <div>
             <div className={s.confirmTitle}>Arquivar paciente?</div>
             <div className={s.confirmText}>
-              {name} sairá da lista padrão. Pode ser recuperado ativando "Incluir arquivados".
+              {name} sairá da lista padrão. Pode ser recuperado na aba Arquivados.
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Check, CircleAlert, CircleCheck, Copy, Lock, Trash2 } from 'lucide-react'
+import { ArrowRight, CircleCheck, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { ToolPanel } from '../layout/ToolPanel'
 import { ToolRail } from '../layout/ToolRail'
 import { TOOL_COMPONENTS } from '../tools'
@@ -8,15 +9,16 @@ import type { ToolId } from '../tools/registry'
 import { Button } from '../ui/Button'
 import { Dialog, dialogIconClass } from '../ui/Dialog'
 import { isCapture } from '@/lib/capture'
-import { formatDateTime, formatDayAtTime } from '@/lib/dates'
-import { noteToText } from '@/lib/noteText'
+import { formatDateTime, formatDay } from '@/lib/dates'
+import { groupByStatus, noteStatus } from '@/lib/noteStatus'
 import { displayName } from '@/lib/patient'
 import { useIsMobile } from '@/lib/useIsMobile'
 import { api } from '@/services/api'
-import type { Evolution, Note, NoteBlock } from '@/types'
+import type { Evolution, Note, NoteBlock, PatientListItem } from '@/types'
 import { NoteEditor, type EditorApi } from './NoteEditor'
 import { NoteReadOnly } from './NoteReadOnly'
 import { PcSheet } from './PcSheet'
+import { TodayPatients } from './TodayPatients'
 import s from './Workspace.module.css'
 
 const PANEL_PARAM: Record<string, ToolId> = {
@@ -34,8 +36,12 @@ const PANEL_PARAM: Record<string, ToolId> = {
 export interface WorkspaceHeaderProps {
   evolution: Evolution
   note: Note | null
+  saveError: boolean
+  savedAt: string | null
   openfinish: () => void
   openPc: () => void
+  openDelete: () => void
+  openArchive: () => void
 }
 
 export function Workspace(props: {
@@ -59,7 +65,9 @@ export function Workspace(props: {
     error: simulateError,
     at: null,
   })
+  const [patients, setPatients] = useState<PatientListItem[]>([])
   const editorRef = useRef<EditorApi>(null)
+  const pendingSave = useRef<(() => void) | null>(null)
   const saveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   // Os painéis montam junto com o editor, então leem a referência só na hora de usar.
   const editorApi = useMemo<EditorApi>(
@@ -72,7 +80,14 @@ export function Workspace(props: {
     [],
   )
 
-  const reload = useCallback(() => api.getEvolution(props.id).then(setEvolution), [props.id])
+  const reload = useCallback(
+    () =>
+      Promise.all([api.getEvolution(props.id), api.listPatients()]).then(([e, list]) => {
+        setEvolution(e)
+        setPatients(list)
+      }),
+    [props.id],
+  )
   useEffect(() => {
     void reload()
   }, [reload])
@@ -97,32 +112,35 @@ export function Workspace(props: {
     selectNote(created.id)
   }
 
+  // Salva o que estiver pendente sem esperar o intervalo: ao trocar de paciente e antes de finalizar.
+  const flushSave = useCallback(() => {
+    clearTimeout(saveTimer.current)
+    pendingSave.current?.()
+    pendingSave.current = null
+  }, [])
+  useEffect(() => flushSave, [flushSave])
+
   const handleChange = (doc: NoteBlock[]) => {
     if (!note) return
+    const noteId = note.id
+    pendingSave.current = () => {
+      pendingSave.current = null
+      if (simulateError) {
+        setSaveState({ error: true, at: null })
+        return
+      }
+      void api.saveNote(props.id, noteId, doc).then((saved) => {
+        setSaveState({ error: false, at: saved.updated_at })
+        void reload()
+      })
+    }
     clearTimeout(saveTimer.current)
-    saveTimer.current = setTimeout(
-      () => {
-        if (simulateError) {
-          setSaveState({ error: true, at: null })
-          return
-        }
-        void api.saveNote(props.id, note.id, doc).then((saved) => {
-          setSaveState({ error: false, at: saved.updated_at })
-          void reload()
-        })
-      },
-      isCapture() ? 0 : 700,
-    )
-  }
-
-  const copyAll = () => {
-    if (!note) return
-    const blocks = editorRef.current?.document() ?? note.content
-    void navigator.clipboard.writeText(noteToText(blocks))
+    saveTimer.current = setTimeout(() => pendingSave.current?.(), isCapture() ? 0 : 700)
   }
 
   const finish = async () => {
     if (!note) return
+    flushSave()
     await api.finishNote(props.id, note.id)
     await reload()
     setDialog(null)
@@ -150,54 +168,36 @@ export function Workspace(props: {
   const ActiveTool = tool ? TOOL_COMPONENTS[tool] : null
   const panelOpen = Boolean(tool)
   const railExpanded = panelOpen || railHover || params.get('rail') === 'open'
-  const savedAt = saveState.at ?? note?.updated_at
+  const savedAt = saveState.at ?? note?.updated_at ?? null
+  const today = groupByStatus(patients)
+  const ordered = [...today.todo, ...today.finished]
+  const position = ordered.findIndex((p) => p.id === props.id)
+  const nextPatient = position >= 0 ? ordered[position + 1] : undefined
+  const latest = evolution.notes[0]
+  const noNoteToday =
+    noteStatus({ last_note_at: latest?.updated_at ?? null, last_note_locked_at: latest?.locked_at ?? null }) ===
+    'none'
 
   return (
     <div className={s.shell}>
       {props.header({
         evolution,
         note,
+        saveError: saveState.error,
+        savedAt,
         openfinish: () => setDialog('finish'),
         openPc: () => setPc('scan'),
+        openDelete: () => setDialog('delete'),
+        openArchive: () => setTool('archive'),
       })}
       <div className={`${s.body} ${props.pcMode ? s.pcBody : ''}`}>
+        {!mobile && !props.pcMode && (
+          <TodayPatients patients={ordered} currentId={props.id} doneCount={today.finished.length} />
+        )}
         {mobile && (
           <ToolRail active={tool} expanded={false} onSelect={selectTool} onHover={() => undefined} />
         )}
         <main className={s.main}>
-          {note && (
-            <div className={s.bar}>
-              {!locked && (
-                <button
-                  type="button"
-                  className={`${s.iconBtn} ${s.delete}`}
-                  aria-label="Excluir nota"
-                  onClick={() => setDialog('delete')}
-                >
-                  <Trash2 size={18} strokeWidth={1.5} aria-hidden />
-                </button>
-              )}
-              <button type="button" className={s.iconBtn} aria-label="Copiar tudo" onClick={copyAll}>
-                <Copy size={16} strokeWidth={1.75} aria-hidden />
-              </button>
-              {locked ? (
-                <span className={s.status}>
-                  <Lock size={13} strokeWidth={1.5} aria-hidden />
-                  Finalizada em {formatDayAtTime(note.locked_at!)}
-                </span>
-              ) : saveState.error ? (
-                <span className={`${s.status} ${s.statusError}`} role="status">
-                  <CircleAlert size={16} strokeWidth={1.5} aria-hidden />
-                  Erro ao salvar
-                </span>
-              ) : (
-                <span className={s.status} role="status">
-                  <Check size={13} strokeWidth={1.5} aria-hidden />
-                  Salvo em {savedAt && formatDayAtTime(savedAt)}
-                </span>
-              )}
-            </div>
-          )}
           {!note ? (
             <div className={s.center}>
               <Button className={s.first} onClick={() => void newNote()}>
@@ -206,6 +206,12 @@ export function Workspace(props: {
             </div>
           ) : (
             <div className={s.scroll}>
+              {noNoteToday && (
+                <div className={s.startBar}>
+                  Sem evolução hoje. Esta é a nota de {formatDay(latest.created_at)}.
+                  <Button onClick={() => void newNote()}>Iniciar evolução</Button>
+                </div>
+              )}
               {locked ? (
                 <NoteReadOnly blocks={note.content} />
               ) : (
@@ -217,6 +223,12 @@ export function Workspace(props: {
                   onChange={handleChange}
                   onOpenTool={setTool}
                 />
+              )}
+              {nextPatient && !props.pcMode && (
+                <Link className={s.nextPatient} to={`/evolucoes/${nextPatient.id}`}>
+                  Próximo paciente: {displayName(nextPatient)}
+                  <ArrowRight size={18} aria-hidden />
+                </Link>
               )}
             </div>
           )}
