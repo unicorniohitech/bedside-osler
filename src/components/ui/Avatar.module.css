@@ -7,8 +7,6 @@
 
 .image {
   width: 100%;
-  max-width: 85.417px;
-  max-height: 85.417px;
   height: 100%;
   border: 2px solid currentColor;
   border-radius: 50%;
