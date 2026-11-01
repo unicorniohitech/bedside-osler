@@ -3,7 +3,7 @@
 }
 
 .editor :global(.bn-editor) {
-  padding: 49px 49px 60px;
+  padding: 24px 49px 32px;
   background: transparent;
   color: var(--text);
   font-family: var(--font);

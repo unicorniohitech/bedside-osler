@@ -1,19 +1,34 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Tabs from '@radix-ui/react-tabs'
 import { Bell, FileText, Info, ListChecks, RefreshCw, Sparkles, TriangleAlert } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { formatDateTime } from '@/lib/dates'
 import { COMPANION, SUMMARIES } from '@/mocks/ai'
 import { isCapture } from '@/lib/capture'
+import { anchorExists, clearHighlights, highlightAnchors, scrollToAnchor } from '@/lib/noteHighlight'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
 const DOT = { high: '#e53935', medium: '#eab308', low: '#9aa0a8' }
 const DISCLAIMER = 'Sugestões do Osler Companion. Não substituem julgamento clínico.'
 
-export function Companion({ params, evolution }: ToolProps) {
+export function Companion({ params, evolution, note }: ToolProps) {
   const [analyzed, setAnalyzed] = useState(params.has('analyzed'))
   const [busy, setBusy] = useState(false)
+
+  const [, setRendered] = useState(0)
+  useEffect(() => {
+    if (!analyzed) return
+    // Os blocos especiais da nota, como os sinais vitais, renderizam um instante depois do painel.
+    const timer = setTimeout(() => {
+      highlightAnchors(COMPANION.alerts.map((a) => a.anchor))
+      setRendered((n) => n + 1)
+    }, 150)
+    return () => {
+      clearTimeout(timer)
+      clearHighlights()
+    }
+  }, [analyzed, note?.id, note?.updated_at])
 
   const analyze = () => {
     setBusy(true)
@@ -75,6 +90,11 @@ export function Companion({ params, evolution }: ToolProps) {
               <div>
                 <div className={s.alertTitle}>{a.title}</div>
                 <div className={s.alertText}>{a.text}</div>
+                {anchorExists(a.anchor) && (
+                  <button type="button" className={s.textBtn} onClick={() => scrollToAnchor(a.anchor)}>
+                    Ver na nota
+                  </button>
+                )}
               </div>
             </div>
           ))}

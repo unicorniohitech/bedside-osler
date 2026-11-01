@@ -17,6 +17,7 @@ export interface EditorApi {
   replaceAll: (blocks: NoteBlock[]) => void
   replaceBlock: (match: (b: NoteBlock) => boolean, block: NoteBlock) => boolean
   document: () => NoteBlock[]
+  setPreview: (text: string | null) => void
 }
 
 // As telas não mostram placeholder em linha vazia.
@@ -29,6 +30,7 @@ interface Props {
   slash: string | null
   onChange: (doc: NoteBlock[]) => void
   onOpenTool: (t: ToolId) => void
+  onCursorSection: (title: string | null) => void
 }
 
 export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props, ref) {
@@ -43,6 +45,10 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
   const onChange = useRef(props.onChange)
   onChange.current = props.onChange
 
+  const onCursorSection = useRef(props.onCursorSection)
+  onCursorSection.current = props.onCursorSection
+
+  const [previewCss, setPreviewCss] = useState('')
   const [hiddenCss, setHiddenCss] = useState('')
   const updateHidden = useCallback(() => {
     const blocks = editor.document
@@ -61,12 +67,18 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
   // O cursor nunca fica escondido: ao chegar numa seção recolhida, ela abre.
   const cursorBlock = useRef<string | null>(null)
   const revealCursor = useCallback(() => {
-    const { id, type } = editor.getTextCursorPosition().block
+    const block = editor.getTextCursorPosition().block
+    const { id, type } = block
     if (id === cursorBlock.current) return
     cursorBlock.current = id
     const header = type === 'sectionHeader' ? undefined : sectionHeaderOf(editor.document, id)
     if (header) collapsedSections(editor).set(header.id, false)
+    const section = type === 'sectionHeader' ? block : header
+    onCursorSection.current((section?.props as { title?: string } | undefined)?.title ?? null)
   }, [editor])
+  useEffect(() => {
+    revealCursor()
+  }, [revealCursor])
 
   useImperativeHandle(
     ref,
@@ -89,6 +101,18 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
         return true
       },
       document: () => editor.document as unknown as NoteBlock[],
+      // A prévia é só CSS depois do bloco do cursor: o documento não muda e nada é salvo.
+      setPreview(text) {
+        if (!text) {
+          setPreviewCss('')
+          return
+        }
+        const { id } = editor.getTextCursorPosition().block
+        const content = JSON.stringify(text).replace(/</g, '\\3C ').replace(/\\n/g, '\\A ')
+        setPreviewCss(
+          `.bn-block-outer[data-id="${CSS.escape(id)}"]::after{content:${content};display:block;white-space:pre-line;margin:6px 0;padding:8px 10px;border:1.5px dashed var(--primary);border-radius:8px;background:var(--primary-soft);color:var(--primary-hover);font-size:14px}`,
+        )
+      },
     }),
     [editor, revealCursor],
   )
@@ -121,7 +145,7 @@ export const NoteEditor = forwardRef<EditorApi, Props>(function NoteEditor(props
 
   return (
     <>
-      <style>{hiddenCss}</style>
+      <style>{hiddenCss + previewCss}</style>
       <BlockNoteView
         className={s.editor}
         editor={editor as never}

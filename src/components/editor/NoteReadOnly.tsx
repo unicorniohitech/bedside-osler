@@ -42,7 +42,7 @@ export function NoteReadOnly({ blocks }: { blocks: NoteBlock[] }) {
                 <div className={s.boxTitle}>SINAIS VITAIS</div>
                 <div className={s.vitals}>
                   {VITAL_FIELDS.map((f) => (
-                    <div key={f.key}>
+                    <div key={f.key} data-field={f.key}>
                       <b>{f.label}</b>
                       {p[f.key]}
                     </div>

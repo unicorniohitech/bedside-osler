@@ -53,3 +53,15 @@ b {
   font-weight: 700;
   letter-spacing: var(--track-bold);
 }
+
+.note-highlight {
+  border-radius: 6px;
+  outline: 2px solid var(--draft-dot);
+  outline-offset: 2px;
+  background: var(--draft-bg);
+}
+
+::highlight(note-highlight) {
+  background-color: var(--draft-bg);
+  color: var(--draft-text);
+}

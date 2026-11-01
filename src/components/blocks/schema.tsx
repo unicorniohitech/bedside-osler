@@ -75,7 +75,7 @@ const VitalsBlock = createReactBlockSpec(
         </div>
         <div className={s.vitalsGrid}>
           {VITAL_FIELDS.map((f) => (
-            <label key={f.key} className={s.vital}>
+            <label key={f.key} className={s.vital} data-field={f.key}>
               {f.label}
               <input
                 value={block.props[f.key]}

@@ -9,7 +9,7 @@ export function StatusDot({ status }: { status: NoteStatus }) {
 
 export function StatusChip({ tone, children }: { tone: NoteStatus | 'error'; children: ReactNode }) {
   return (
-    <span className={`${s.chip} ${s[tone]}`} role="status">
+    <span className={`${s.chip} ${s[tone]}`} role={tone === 'error' ? 'alert' : undefined}>
       {tone === 'finished' && <Check size={14} strokeWidth={2.25} aria-hidden />}
       {tone === 'error' && <CircleAlert size={14} strokeWidth={2} aria-hidden />}
       {(tone === 'draft' || tone === 'none') && <StatusDot status={tone} />}

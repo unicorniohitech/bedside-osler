@@ -1,34 +1,23 @@
 import { TOOLS, type ToolId } from '../tools/registry'
 import s from './ToolRail.module.css'
 
-export function ToolRail(props: {
-  active: ToolId | null
-  expanded: boolean
-  onSelect: (id: ToolId) => void
-  onHover: (hovering: boolean) => void
-}) {
+// Coluna de ícones para janelas abaixo de 1200 px, onde o painel inteiro não cabe.
+export function ToolRail(props: { active: ToolId | null; onSelect: (id: ToolId) => void }) {
   return (
-    <nav
-      className={`${s.rail} ${props.expanded ? s.expanded : ''}`}
-      aria-label="Ferramentas"
-      onMouseEnter={() => props.onHover(true)}
-      onMouseLeave={() => props.onHover(false)}
-    >
-      {TOOLS.map(({ id, label, Icon }) => (
-        <div key={id} style={{ display: 'contents' }}>
-          {id === 'archive' && <div className={s.rule} />}
-          <button
-            type="button"
-            className={`${s.item} ${props.active === id ? s.active : ''}`}
-            aria-label={label}
-            aria-pressed={props.active === id}
-            title={label}
-            onClick={() => props.onSelect(id)}
-          >
-            <Icon size={16} strokeWidth={1.5} aria-hidden />
-            <span className={s.label}>{label}</span>
-          </button>
-        </div>
+    <nav className={s.rail} aria-label="Ferramentas">
+      {TOOLS.map(({ id, label, shortLabel, Icon }) => (
+        <button
+          key={id}
+          type="button"
+          className={`${s.item} ${props.active === id ? s.active : ''}`}
+          aria-label={label}
+          aria-pressed={props.active === id}
+          title={label}
+          onClick={() => props.onSelect(id)}
+        >
+          <Icon size={18} strokeWidth={1.5} aria-hidden />
+          <span className={s.label}>{shortLabel}</span>
+        </button>
       ))}
     </nav>
   )

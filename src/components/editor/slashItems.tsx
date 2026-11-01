@@ -131,6 +131,7 @@ export function buildSlashItems(editor: BedsideEditor, openTool: (t: ToolId) => 
       group: 'Bedside',
       bedside: true,
       icon: <BookOpen {...ICON} />,
+      aliases: ['cid'],
       onItemClick: () => openTool('cid'),
     },
     {
@@ -138,13 +139,15 @@ export function buildSlashItems(editor: BedsideEditor, openTool: (t: ToolId) => 
       group: 'Bedside',
       bedside: true,
       icon: <Calculator {...ICON} />,
+      aliases: ['calc'],
       onItemClick: () => openTool('calc'),
     },
     {
-      title: 'Aplicar template',
+      title: 'Inserir template',
       group: 'Bedside',
       bedside: true,
       icon: <FileText {...ICON} />,
+      aliases: ['template'],
       onItemClick: () => openTool('templates'),
     },
     {

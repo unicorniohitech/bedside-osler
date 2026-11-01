@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
 
-const QUERY = '(max-width: 767px)'
-
-export function useIsMobile() {
-  const [mobile, setMobile] = useState(() => window.matchMedia(QUERY).matches)
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches)
   useEffect(() => {
-    const mq = window.matchMedia(QUERY)
-    const on = () => setMobile(mq.matches)
+    const mq = window.matchMedia(query)
+    const on = () => setMatches(mq.matches)
     mq.addEventListener('change', on)
     return () => mq.removeEventListener('change', on)
-  }, [])
-  return mobile
+  }, [query])
+  return matches
 }
+
+export const useIsMobile = () => useMediaQuery('(max-width: 767px)')
+
+// Abaixo de 1200 px o painel de ferramentas recolhe para a coluna de ícones.
+export const useIsNarrow = () => useMediaQuery('(max-width: 1199px)')

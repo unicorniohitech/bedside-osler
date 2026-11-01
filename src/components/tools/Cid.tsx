@@ -1,39 +1,62 @@
 import { useMemo, useState } from 'react'
-import { Check, FilePlus2, Search, X } from 'lucide-react'
-import { Button } from '../ui/Button'
+import { Check, Search, X } from 'lucide-react'
+import { InsertToolFrame } from './InsertToolFrame'
+import { noteToText } from '@/lib/noteText'
 import { CID10 } from '@/mocks/cid'
 import type { ToolProps } from './types'
 import s from './tools.module.css'
 
-export function Cid({ params, editor, onClose }: ToolProps) {
+const label = (c: (typeof CID10)[number]) => `${c.code} - ${c.name}`
+
+export function Cid({ params, editor, note, evolution, cursorSection, onClose }: ToolProps) {
   const [query, setQuery] = useState(params.get('search') ?? '')
   const [selected, setSelected] = useState<string[]>(params.get('selected')?.split(',') ?? [])
 
+  // Códigos que já aparecem em alguma nota deste paciente vêm primeiro.
+  const used = useMemo(() => {
+    const text = evolution.notes.map((n) => noteToText(n.content)).join('\n')
+    return CID10.filter((c) => new RegExp(`(^|[^\\w.])${c.code.replace('.', '\\.')}($|[^\\w.])`).test(text))
+  }, [evolution.notes])
+
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return []
-    return CID10.filter((c) => `${c.code} ${c.name} ${c.termos}`.toLowerCase().includes(q))
-  }, [query])
+    if (!q) return used
+    const found = CID10.filter((c) => `${c.code} ${c.name} ${c.termos}`.toLowerCase().includes(q))
+    return [...found.filter((c) => used.includes(c)), ...found.filter((c) => !used.includes(c))]
+  }, [query, used])
 
   const toggle = (code: string) =>
     setSelected((c) => (c.includes(code) ? c.filter((x) => x !== code) : [...c, code]))
 
+  const chosen = CID10.filter((c) => selected.includes(c.code))
+
   const insert = () => {
-    const blocks = CID10.filter((c) => selected.includes(c.code)).map((c) => ({
-      type: 'paragraph',
-      content: [{ type: 'text' as const, text: `${c.code} - ${c.name}`, styles: {} }],
-    }))
-    editor?.insert(blocks)
+    editor?.insert(
+      chosen.map((c) => ({
+        type: 'paragraph',
+        content: [{ type: 'text' as const, text: label(c), styles: {} }],
+      })),
+    )
     setSelected([])
     onClose()
   }
 
   return (
-    <div className={s.fill}>
+    <InsertToolFrame
+      editor={editor}
+      note={note}
+      cursorSection={cursorSection}
+      preview={chosen.length ? chosen.map(label).join('\n') : null}
+      actionLabel={`Inserir ${chosen.length} ${chosen.length === 1 ? 'CID' : 'CIDs'} no cursor`}
+      onInsert={insert}
+      tags={chosen.map((c) => ({ id: c.code, label: c.code, onRemove: () => toggle(c.code) }))}
+    >
       <div className={s.search}>
         <Search size={15} strokeWidth={1.5} aria-hidden style={{ top: 10 }} />
         <input
           aria-label="Buscar CID-10"
+          autoFocus
+          placeholder="Buscar CID-10..."
           style={{ height: 35 }}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -50,9 +73,9 @@ export function Cid({ params, editor, onClose }: ToolProps) {
           </button>
         )}
       </div>
-      {query.trim() && (
+      {(query.trim() || results.length > 0) && (
         <span className={s.sectionLabel} style={{ marginTop: 7, paddingLeft: 2 }}>
-          RESULTADOS · {results.length}
+          {query.trim() ? 'RESULTADOS' : 'JÁ USADOS NESTE PACIENTE'} · {results.length}
         </span>
       )}
       <div className={s.scroll}>
@@ -64,6 +87,7 @@ export function Cid({ params, editor, onClose }: ToolProps) {
               <span className={s.itemMain}>
                 <span className={s.itemDate} style={{ display: 'block' }}>
                   {c.code}
+                  {used.includes(c) && ' · já usado'}
                 </span>
                 <span className={s.itemTitle} style={{ display: 'block' }}>
                   {c.name}
@@ -76,17 +100,6 @@ export function Cid({ params, editor, onClose }: ToolProps) {
           )
         })}
       </div>
-      {selected.length > 0 && (
-        <div className={s.endActions}>
-          <Button variant="secondary" onClick={() => setSelected([])}>
-            Limpar
-          </Button>
-          <Button onClick={insert}>
-            <FilePlus2 size={15} aria-hidden />
-            Inserir {selected.length} {selected.length === 1 ? 'CID' : 'CIDs'}
-          </Button>
-        </div>
-      )}
-    </div>
+    </InsertToolFrame>
   )
 }

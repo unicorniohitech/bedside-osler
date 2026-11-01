@@ -6,6 +6,7 @@ export interface ToolProps {
   note: Note | null
   editor: EditorApi | null
   params: URLSearchParams
+  cursorSection: string | null
   onSelectNote: (id: string) => void
   onNewNote: () => void
   onClose: () => void

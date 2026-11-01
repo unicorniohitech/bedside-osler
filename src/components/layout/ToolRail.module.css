@@ -2,98 +2,38 @@
   flex: none;
   display: flex;
   flex-direction: column;
-  width: 44px;
-  padding-top: 7px;
-  border-left: 1px solid var(--tool-rail-border);
-  background: var(--tool-rail);
-  overflow: hidden;
-  transition: none;
-}
-
-.expanded {
-  width: 170px;
+  gap: 2px;
+  width: 72px;
+  margin: 16px 12px 16px 0;
+  padding: 6px 4px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  overflow-y: auto;
 }
 
 .item {
   flex: none;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 9px;
-  width: 150px;
-  height: 29px;
-  margin: 4.1px 8px 4.1px 10px;
-  padding: 0 14px 0 9px;
+  gap: 3px;
+  padding: 7px 2px;
   border-radius: 10px;
-  color: var(--tool-text);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.rail:not(.expanded) .item {
-  margin-left: 6px;
-  padding-left: 8px;
-}
-
-.item svg {
-  flex: none;
+  color: var(--text-muted);
 }
 
 .label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  visibility: hidden;
+  font-size: 11px;
+  line-height: 13px;
 }
 
-.expanded .label {
-  visibility: visible;
+.item:hover {
+  background: var(--primary-soft);
 }
 
 .active {
-  background: var(--surface);
-  color: var(--primary);
-  box-shadow: 0 1px 6px rgba(100, 98, 164, 0.14);
-}
-
-.rule {
-  flex: none;
-  height: 1px;
-  margin: 8px 6px 8px 8px;
-  background: var(--tool-rail-border);
-}
-
-@media (max-width: 767px) {
-  .rail {
-    flex-direction: row;
-    width: 100%;
-    height: 50px;
-    padding: 0 9px;
-    align-items: center;
-    border-left: 0;
-    border-top: 1px solid var(--tool-rail-border);
-    border-bottom: 1px solid var(--tool-rail-border);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .item,
-  .rail:not(.expanded) .item {
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .label {
-    display: none;
-  }
-
-  .rule {
-    width: 1px;
-    height: 26px;
-    margin: 0 8px;
-  }
+  background: var(--primary-soft);
+  color: var(--primary-hover);
+  font-weight: 700;
 }

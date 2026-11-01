@@ -1,0 +1,126 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.historyHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.historyTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-hover);
+}
+
+.seeAll {
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: var(--primary-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--primary-hover);
+}
+
+.note {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: var(--card);
+  text-align: left;
+}
+
+.note:hover {
+  background: var(--primary-soft);
+}
+
+.noteDate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.noteLine {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.groupTitle {
+  margin: 14px 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.groupTitle:first-child {
+  margin-top: 0;
+}
+
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 6px;
+  border-radius: 8px;
+  color: var(--text);
+  text-align: left;
+}
+
+.tool:hover {
+  background: var(--primary-soft);
+}
+
+.tool svg {
+  flex: none;
+  color: var(--primary);
+}
+
+.toolLabel {
+  flex: 1;
+  font-size: 14px;
+}
+
+.hint {
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.separator {
+  margin: 10px 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.archive {
+  width: 100%;
+  min-height: 34px;
+  padding: 0 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  text-align: left;
+}

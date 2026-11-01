@@ -6,15 +6,40 @@
 }
 
 .body {
+  position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
   gap: 16px;
-  padding-right: 60px;
+  background-image: url('../../assets/watermark.svg');
 }
 
 .pcBody {
-  padding-right: 0;
+  padding-left: 16px;
+}
+
+.tools {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 330px;
+  margin: 16px 16px 16px 0;
+  overflow-y: auto;
+}
+
+.toolsWide {
+  width: 480px;
+}
+
+.toolsOverlay {
+  position: absolute;
+  top: 0;
+  right: 84px;
+  bottom: 0;
+  z-index: 6;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  border-radius: 16px;
 }
 
 .main {
@@ -70,6 +95,7 @@
   padding-bottom: 2px;
 }
 
+
 .first {
   height: 46px;
   padding: 0 18px;
@@ -84,7 +110,6 @@
 @media (max-width: 767px) {
   .body {
     flex-direction: column;
-    padding-right: 0;
   }
 
   .body {

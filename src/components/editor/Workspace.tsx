@@ -4,6 +4,7 @@ import { ArrowRight, CircleCheck, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolPanel } from '../layout/ToolPanel'
 import { ToolRail } from '../layout/ToolRail'
+import { ToolsHome } from '../tools/ToolsHome'
 import { TOOL_COMPONENTS } from '../tools'
 import type { ToolId } from '../tools/registry'
 import { Button } from '../ui/Button'
@@ -12,7 +13,7 @@ import { isCapture } from '@/lib/capture'
 import { formatDateTime, formatDay } from '@/lib/dates'
 import { groupByStatus, noteStatus } from '@/lib/noteStatus'
 import { displayName } from '@/lib/patient'
-import { useIsMobile } from '@/lib/useIsMobile'
+import { useIsMobile, useIsNarrow } from '@/lib/useIsMobile'
 import { api } from '@/services/api'
 import type { Evolution, Note, NoteBlock, PatientListItem } from '@/types'
 import { NoteEditor, type EditorApi } from './NoteEditor'
@@ -52,10 +53,11 @@ export function Workspace(props: {
   const [params, setParams] = useSearchParams()
   const navigate = useNavigate()
   const mobile = useIsMobile()
+  const narrow = useIsNarrow()
   const [evolution, setEvolution] = useState<Evolution | null>(null)
   const noteId = params.get('note')
   const [tool, setTool] = useState<ToolId | null>(PANEL_PARAM[params.get('panel') ?? ''] ?? null)
-  const [railHover, setRailHover] = useState(false)
+  const [cursorSection, setCursorSection] = useState<string | null>(null)
   const [dialog, setDialog] = useState<string | null>(params.get('dialog'))
   const [pc, setPc] = useState<'scan' | 'confirm' | null>(
     (params.get('pc') as 'scan' | 'confirm') ?? null,
@@ -76,6 +78,7 @@ export function Workspace(props: {
       replaceAll: (blocks) => editorRef.current?.replaceAll(blocks),
       replaceBlock: (match, block) => editorRef.current?.replaceBlock(match, block) ?? false,
       document: () => editorRef.current?.document() ?? [],
+      setPreview: (text) => editorRef.current?.setPreview(text),
     }),
     [],
   )
@@ -166,8 +169,6 @@ export function Workspace(props: {
 
   const selectTool = (id: ToolId) => setTool((cur) => (cur === id ? null : id))
   const ActiveTool = tool ? TOOL_COMPONENTS[tool] : null
-  const panelOpen = Boolean(tool)
-  const railExpanded = panelOpen || railHover || params.get('rail') === 'open'
   const savedAt = saveState.at ?? note?.updated_at ?? null
   const today = groupByStatus(patients)
   const ordered = [...today.todo, ...today.finished]
@@ -194,9 +195,7 @@ export function Workspace(props: {
         {!mobile && !props.pcMode && (
           <TodayPatients patients={ordered} currentId={props.id} doneCount={today.finished.length} />
         )}
-        {mobile && (
-          <ToolRail active={tool} expanded={false} onSelect={selectTool} onHover={() => undefined} />
-        )}
+        {mobile && <ToolRail active={tool} onSelect={selectTool} />}
         <main className={s.main}>
           {!note ? (
             <div className={s.center}>
@@ -205,7 +204,7 @@ export function Workspace(props: {
               </Button>
             </div>
           ) : (
-            <div className={s.scroll}>
+            <div className={s.scroll} data-note-root>
               {noNoteToday && (
                 <div className={s.startBar}>
                   Sem evolução hoje. Esta é a nota de {formatDay(latest.created_at)}.
@@ -222,6 +221,7 @@ export function Workspace(props: {
                   slash={params.get('slash')}
                   onChange={handleChange}
                   onOpenTool={setTool}
+                  onCursorSection={setCursorSection}
                 />
               )}
               {nextPatient && !props.pcMode && (
@@ -233,21 +233,28 @@ export function Workspace(props: {
             </div>
           )}
         </main>
-        {ActiveTool && tool && (
-          <ToolPanel tool={tool} onClose={() => setTool(null)}>
-            <ActiveTool
-              evolution={evolution}
-              note={note}
-              editor={editorApi}
-              params={params}
-              onSelectNote={selectNote}
-              onNewNote={() => void newNote()}
-              onClose={() => setTool(null)}
-            />
-          </ToolPanel>
-        )}
-        {!mobile && (
-          <ToolRail active={tool} expanded={railExpanded} onSelect={selectTool} onHover={setRailHover} />
+        {!mobile && narrow && <ToolRail active={tool} onSelect={selectTool} />}
+        {(ActiveTool || (!mobile && !narrow)) && (
+          <div
+            className={`${s.tools} ${tool === 'flowchart' ? s.toolsWide : ''} ${narrow ? s.toolsOverlay : ''}`}
+          >
+            {ActiveTool && tool ? (
+              <ToolPanel tool={tool} onClose={() => setTool(null)}>
+                <ActiveTool
+                  evolution={evolution}
+                  note={note}
+                  editor={editorApi}
+                  params={params}
+                  cursorSection={cursorSection}
+                  onSelectNote={selectNote}
+                  onNewNote={() => void newNote()}
+                  onClose={() => setTool(null)}
+                />
+              </ToolPanel>
+            ) : (
+              <ToolsHome evolution={evolution} onSelectNote={selectNote} onOpenTool={setTool} />
+            )}
+          </div>
         )}
       </div>
 

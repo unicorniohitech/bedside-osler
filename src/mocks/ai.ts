@@ -10,16 +10,19 @@ export const COMPANION = {
     {
       level: 'warning' as const,
       title: 'SatO2 acima do alvo para DPOC',
+      anchor: { field: 'sat_o2' },
       text: 'SatO2 de 93% em cateter a 2 L/min. Em paciente que retém CO2, o alvo é de 88 a 92%: dá para reduzir o fluxo.',
     },
     {
       level: 'info' as const,
       title: 'Azitromicina termina amanhã',
+      anchor: { text: 'azitromicina 500 mg/dia' },
       text: 'Iniciada em 24/10. A nota de hoje marca o 4º de 5 dias.',
     },
     {
       level: 'info' as const,
       title: 'Função renal normalizou',
+      anchor: { text: 'Cr 1,0' },
       text: 'Creatinina de 1,4 em 24/10 para 1,0 em 28/10.',
     },
   ],
