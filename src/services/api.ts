@@ -20,7 +20,7 @@ const syncListItem = (id: string) => {
   const evo = evolutions[id]
   if (!item || !evo) return
   const last = evo.notes[0]
-  item.last_note_at = last?.created_at ?? null
+  item.last_note_at = last?.updated_at ?? null
   item.last_note_locked_at = last?.locked_at ?? null
   item.archived_at = evo.archived_at
 }
@@ -34,7 +34,13 @@ const requireNote = (id: string, noteId: string) => {
 export const api = {
   listPatients: () => wait(list),
 
-  getEvolution: (id: string) => wait(evolutions[id] ?? null),
+  // A foto e o health_status vêm da listagem, que é onde o JSON de exemplo os guarda.
+  getEvolution(id: string) {
+    const evolution = evolutions[id]
+    const item = list.find((p) => p.id === id)
+    if (!evolution) return wait(null)
+    return wait({ ...evolution, photo_avatar: item?.photo_avatar, health_status: item?.health_status })
+  },
 
   createPatient(input: NewPatientInput) {
     seq += 1
@@ -69,6 +75,7 @@ export const api = {
     note.content = content
     note.updated_at = NOW_ISO
     note.version += 1
+    syncListItem(id)
     const item = list.find((p) => p.id === id)
     if (item) item.updated_at = NOW_ISO
     return wait(note)
