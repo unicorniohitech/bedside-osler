@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState, type ChangeEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowRight, Users } from 'lucide-react'
+import { ArrowRight, Upload, Users, X } from 'lucide-react'
 import { AppHeader } from '@/components/layout/AppHeader'
 import { Watermark } from '@/components/layout/Watermark'
+import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
 import { Select } from '@/components/ui/Select'
 import { formatInitials } from '@/lib/initials'
@@ -62,11 +63,23 @@ export function NewPatient() {
   const [sex, setSex] = useState<Sex | undefined>()
   const [bed, setBed] = useState(sample ? 'PS 3' : '')
   const [record, setRecord] = useState('')
+  const [avatar, setAvatar] = useState<string | undefined>()
+  const avatarInput = useRef<HTMLInputElement>(null)
   const canCreate = Boolean(name.trim() || initials.trim())
+
+  const pickAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => setAvatar(reader.result as string)
+    reader.readAsDataURL(file)
+  }
 
   const submit = async () => {
     const id = await api.createPatient({
       context,
+      photo_avatar: avatar,
       patient_name: name.trim() || undefined,
       patient_initials: initials || undefined,
       patient_age: age ? Number(age) : undefined,
@@ -102,6 +115,36 @@ export function NewPatient() {
             </div>
             {/* <span className={s.ctxLabel}>Contexto clínico</span>
             <Segmented label="Contexto clínico" value={context} options={CONTEXTS} onChange={setContext} /> */}
+
+            <div className={`${s.field} ${s.avatarField}`}>
+              <label className={s.labelRow} htmlFor="avatar">
+                <b>Foto do paciente</b>
+                <small>Opcional</small>
+              </label>
+              <div className={s.avatarRow}>
+                <Avatar src={avatar} size={64} alt="Foto do paciente" />
+                <input
+                  ref={avatarInput}
+                  id="avatar"
+                  className={s.avatarInput}
+                  type="file"
+                  accept="image/*"
+                  onChange={pickAvatar}
+                />
+                <div className={s.avatarActions}>
+                  <Button variant="secondary" onClick={() => avatarInput.current?.click()}>
+                    <Upload size={16} aria-hidden />
+                    {avatar ? 'Trocar imagem' : 'Escolher imagem'}
+                  </Button>
+                  {avatar && (
+                    <Button variant="secondary" onClick={() => setAvatar(undefined)}>
+                      <X size={16} aria-hidden />
+                      Remover
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
 
             <div className={s.row2}>
               <Field

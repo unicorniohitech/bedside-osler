@@ -11,9 +11,10 @@ type Props = {
 }
 
 export function Avatar({ src, alt = '', status, size = 100, className }: Props) {
-  function getPatientImage(imageName: string | undefined) {
-  return new URL(`../../assets/patients/${imageName}.png`, import.meta.url).href;
-}
+  function getPatientImage(imageName: string) {
+    if (imageName.startsWith('data:')) return imageName
+    return new URL(`../../assets/patients/${imageName}.png`, import.meta.url).href
+  }
 
   const color = status && HEALTH_STATUS_COLOR[status]
   return (
