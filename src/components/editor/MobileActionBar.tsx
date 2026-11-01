@@ -23,9 +23,11 @@ export function MobileActionBar(props: {
         <Mic size={20} strokeWidth={1.75} aria-hidden />
         Ditado
       </button>
-      <Button className={s.finish} disabled={!props.canEdit} onClick={props.onFinish}>
-        Concluir
-      </Button>
+      {props.canEdit && (
+        <Button className={s.finish} onClick={props.onFinish}>
+          Concluir
+        </Button>
+      )}
     </nav>
   )
 }

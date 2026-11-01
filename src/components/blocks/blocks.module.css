@@ -112,6 +112,10 @@
   color: var(--text-muted);
 }
 
+.vital[data-field='sat_o2'] {
+  grid-column: span 2;
+}
+
 .vitalsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));

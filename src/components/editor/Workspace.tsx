@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowRight, CircleCheck, Trash2 } from 'lucide-react'
+import { ArrowRight, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolPanel } from '../layout/ToolPanel'
 import { ToolRail } from '../layout/ToolRail'
@@ -13,12 +13,14 @@ import { Dialog, dialogIconClass } from '../ui/Dialog'
 import { isCapture } from '@/lib/capture'
 import { formatDateTime, formatDay } from '@/lib/dates'
 import { groupByStatus, noteStatus } from '@/lib/noteStatus'
+import { noteToText } from '@/lib/noteText'
 import { displayName } from '@/lib/patient'
 import { useIsMobile, useIsNarrow } from '@/lib/useIsMobile'
 import { api } from '@/services/api'
 import type { Evolution, Note, NoteBlock, PatientListItem } from '@/types'
 import { NoteEditor, type EditorApi } from './NoteEditor'
 import { NoteReadOnly } from './NoteReadOnly'
+import { FinishFlow } from './FinishFlow'
 import { MobileActionBar } from './MobileActionBar'
 import { PcSheet } from './PcSheet'
 import { TodayPatients } from './TodayPatients'
@@ -59,6 +61,7 @@ export function Workspace(props: {
   const [evolution, setEvolution] = useState<Evolution | null>(null)
   const noteId = params.get('note')
   const [tool, setTool] = useState<ToolId | null>(PANEL_PARAM[params.get('panel') ?? ''] ?? null)
+  const [copied, setCopied] = useState(false)
   const [toolsSheet, setToolsSheet] = useState(false)
   const [cursorSection, setCursorSection] = useState<string | null>(null)
   const [dialog, setDialog] = useState<string | null>(params.get('dialog'))
@@ -144,12 +147,30 @@ export function Workspace(props: {
     saveTimer.current = setTimeout(() => pendingSave.current?.(), isCapture() ? 0 : 700)
   }
 
+  const copyNote = async () => {
+    if (!note) return
+    const blocks = editorRef.current?.document() ?? note.content
+    try {
+      await navigator.clipboard.writeText(noteToText(blocks))
+      setCopied(true)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  // A cópia abre o fluxo de concluir; o diálogo mostra se ela funcionou.
+  const startFinish = async () => {
+    flushSave()
+    await copyNote()
+    setDialog('finish')
+  }
+
   const finish = async () => {
     if (!note) return
     flushSave()
+    setDialog(null)
     await api.finishNote(props.id, note.id)
     await reload()
-    setDialog(null)
   }
 
   const removeNote = async () => {
@@ -204,7 +225,7 @@ export function Workspace(props: {
         note,
         saveError: saveState.error,
         savedAt,
-        openfinish: () => setDialog('finish'),
+        openfinish: () => void startFinish(),
         openPc: () => setPc('scan'),
         openDelete: () => setDialog('delete'),
         openArchive: () => setTool('archive'),
@@ -271,7 +292,7 @@ export function Workspace(props: {
           onHistory={() => setTool('history')}
           onTools={() => setToolsSheet(true)}
           onDictate={() => editorApi.insert([{ type: 'dictation' }])}
-          onFinish={() => setDialog('finish')}
+          onFinish={() => void startFinish()}
         />
       )}
       {toolsSheet && (
@@ -284,29 +305,18 @@ export function Workspace(props: {
         />
       )}
 
-      <Dialog
-        open={dialog === 'finish'}
-        onClose={() => setDialog(null)}
-        title="Finalizar evolução"
-        icon={<CircleCheck className={dialogIconClass} size={26} strokeWidth={1.75} aria-hidden />}
-        footer={
-          <>
-            <Button variant="secondary" onClick={() => setDialog(null)}>
-              Cancelar
-            </Button>
-            <Button onClick={() => void finish()}>Finalizar evolução</Button>
-          </>
-        }
-      >
-        <p>
-          Finalizar a evolução é o último passo do registro clínico – sinaliza que o conteúdo foi revisado e
-          está pronto para ficar no prontuário.
-        </p>
-        <p>
-          Depois de finalizada, <strong>nada mais pode ser alterado</strong> nesta evolução. Crie uma nova
-          evolução para registrar mudanças posteriores.
-        </p>
-      </Dialog>
+      {dialog === 'finish' && (
+        <FinishFlow
+          copied={copied}
+          onCopy={() => void copyNote()}
+          onOpenPc={() => {
+            setDialog(null)
+            setPc('scan')
+          }}
+          onFinish={() => void finish()}
+          onClose={() => setDialog(null)}
+        />
+      )}
 
       <Dialog
         open={dialog === 'delete'}

@@ -23,7 +23,8 @@
 }
 
 .primary:disabled {
-  background: var(--primary-disabled);
+  background: var(--primary-soft);
+  color: var(--primary-hover);
   cursor: default;
 }
 

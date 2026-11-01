@@ -1,0 +1,47 @@
+.retry {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.alternative {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--primary-hover);
+  text-decoration: underline;
+  text-align: left;
+}
+
+.finish {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--draft-bg);
+  color: var(--draft-text);
+}
+
+.finish p {
+  margin-top: 4px;
+}
+
+.sheetBody {
+  font-size: 14.5px;
+  line-height: 21px;
+}
+
+.sheetButtons {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  padding: 16px 0 calc(16px + env(safe-area-inset-bottom));
+}
+
+.sheetButtons button {
+  height: 46px;
+  font-size: 14px;
+}
