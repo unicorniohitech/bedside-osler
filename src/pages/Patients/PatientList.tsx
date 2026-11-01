@@ -147,7 +147,7 @@ export function PatientList() {
         <Watermark>
           <div className={s.main}>
             <div className={s.loading}>
-              Buscando papel e brigando com a impressora...
+              Carregando evoluções...
             </div>
           </div>
         </Watermark>

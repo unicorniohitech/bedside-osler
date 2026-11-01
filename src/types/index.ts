@@ -73,6 +73,7 @@ export interface Evolution extends Patient {
 
 export interface NewPatientInput {
   context: Context
+  photo_avatar?: string
   patient_name?: string
   patient_initials?: string
   patient_age?: number

@@ -60,6 +60,7 @@ export function FinishFlow(props: {
     <Dialog
       open
       onClose={props.onClose}
+      size="small"
       title={title}
       icon={<Icon className={dialogIconClass} size={26} strokeWidth={1.75} aria-hidden />}
       footer={buttons}

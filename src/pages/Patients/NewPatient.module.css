@@ -106,6 +106,26 @@
   font-style: italic;
 }
 
+.avatarField {
+  margin-bottom: 18px;
+}
+
+.avatarRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatarInput {
+  display: none;
+}
+
+.avatarActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
