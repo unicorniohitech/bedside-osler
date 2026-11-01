@@ -52,11 +52,11 @@
   gap: 7px;
   margin-left: auto;
   font-size: 11.5px;
-  color: #9a9a9a;
+  color: var(--text-faint);
 }
 
 .status svg {
-  color: #9a9a9a;
+  color: var(--text-faint);
 }
 
 .statusError,

@@ -15,7 +15,11 @@
 
 .primary {
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--primary-hover);
 }
 
 .primary:disabled {
@@ -31,5 +35,5 @@
 
 .danger {
   background: var(--danger);
-  color: #fff;
+  color: var(--on-primary);
 }

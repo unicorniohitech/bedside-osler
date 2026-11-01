@@ -70,7 +70,7 @@
   font-weight: 700;
   line-height: 14px;
   letter-spacing: 0.04em;
-  color: #8a8a8a;
+  color: var(--text-faint);
 }
 
 .vitals {

@@ -71,14 +71,14 @@
   position: absolute;
   top: 9px;
   left: 11px;
-  color: #8a8a8a;
+  color: var(--text-faint);
 }
 
 .clear {
   position: absolute;
   top: 9px;
   right: 15px;
-  color: #8a8a8a;
+  color: var(--text-faint);
   line-height: 0;
 }
 
@@ -180,7 +180,7 @@
   border: 1px dashed #d4d4d4;
   border-radius: 10px;
   background: var(--card);
-  color: #9a9a9a;
+  color: var(--text-faint);
 }
 
 .emptyTitle {

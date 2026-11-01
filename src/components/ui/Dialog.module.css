@@ -44,7 +44,7 @@
   place-items: center;
   width: 28px;
   height: 28px;
-  color: #8a8a8a;
+  color: var(--text-faint);
   margin-right: 3px;
 }
 
