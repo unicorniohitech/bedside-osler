@@ -2,7 +2,6 @@
 import fs from 'node:fs'
 import { PNG } from 'pngjs'
 import potrace from 'potrace'
-import jsQR from 'jsqr'
 
 const SCREENS = '../teste-evolucoes-bedside/telas/'
 const src = PNG.sync.read(fs.readFileSync(SCREENS + '53-PC-QR.png'))
@@ -30,4 +29,3 @@ potrace.trace(tmp, { threshold: 128, turdSize: 4 }, (err: Error | null, svg: str
   fs.writeFileSync('src/assets/osler-signature.path.txt', d)
 })
 
-const qr = jsQR(new Uint8ClampedArray(src.data), src.width, src.height)
