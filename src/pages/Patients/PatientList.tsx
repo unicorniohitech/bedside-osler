@@ -18,6 +18,7 @@ import { SUMMARIES } from '@/mocks/ai'
 import { type PatientListItem } from '@/types'
 import btn from '@/components/ui/Button.module.css'
 import s from './PatientList.module.css'
+import { Divider } from '@/components/ui/Divider'
 
 function primaryAction(p: PatientListItem) {
   const status = noteStatus(p)
@@ -88,6 +89,7 @@ function PatientCard(props: {
               <Sparkles size={16} strokeWidth={1.5} aria-hidden />
               Gerar resumo
             </MenuItem>
+            <Divider />
             <MenuItem onSelect={() => void api.setArchived(p.id, !p.archived_at).then(props.onChanged)}>
               {p.archived_at ? (
                 <ArchiveRestore size={16} strokeWidth={1.5} aria-hidden />
