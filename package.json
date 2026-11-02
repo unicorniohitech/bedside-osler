@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write src scripts",
-    "compare": "tsx scripts/compare.ts"
+    "prepare": "husky"
   },
   "dependencies": {
     "@blocknote/core": "^0.56.0",
