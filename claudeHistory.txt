@@ -1,0 +1,593 @@
+
+⏺ A réplica está pronta em Osler/bedside-replica/, com as 54 telas e os fluxos
+  funcionando; o build e o lint passam. Para rodar:
+
+  cd bedside-replica && pnpm install && pnpm dev
+
+  Resultado
+
+  - Fidelidade visual: em média, 4,9% dos pixels diferem por tela. O pior caso é
+    a 14 (editor no celular), com 10,8%, e o melhor é a 25, com menos de 1%.
+    Quase toda a diferença vem do desenho das letras, porque a fonte não é a
+    original.
+  - Quebras de linha: algumas ainda diferem das imagens, principalmente no
+    celular. Conferi por amostragem, abrindo cerca de 20 das 54 comparações.
+    Todas as outras só têm a porcentagem medida.
+  - Fluxos: todos os testados passaram, sem erro no console. Cobri cadastro,
+    menu do /, salvamento automático, copiar tudo, CID-10, CURB-65, fluxograma,
+    templates, finalizar, excluir, arquivar e o QR. Testei só no desktop e o
+    script não entrou no projeto; no celular, só comparei imagens.
+  - Dados: dados-exemplo.json continua idêntico ao original.
+
+  O que ficou diferente do pedido
+
+  - CURB-65 incompleto: entendi "manter como está" como ficar só no que a imagem
+    mostra. A calculadora tem apenas os critérios C e U, com pontuação de 0 a
+    2, e o resultado inserido é só Pontuação: N. Se você queria a versão
+    completa, me avise; é uma mudança pequena.
+  - Commits: são um por etapa, mas o Workspace importa todas as partes, então os
+    commits intermediários do editor e dos painéis não compilam sozinhos. Só o
+    estado final garante o build.
+  - Fonte: usei Plus Jakarta Sans com ajuste de espaçamento entre letras, porque
+    você não tem a Garet.
+  - TypeScript: rebaixei do 7 para o 5.9, porque o ESLint ainda não suporta o 7.
+
+  O que você precisa fazer
+
+  - Apagar as sobras do template: a checagem de segurança bloqueou a remoção,
+    então estes arquivos ficaram sem uso e fora dos commits: .oxlintrc.json,
+    src/App.css, src/index.css, src/assets/hero.png, src/assets/react.svg e
+    src/assets/vite.svg. Também ficaram src/App.tsx, que é só um repasse, e
+    public/icons.svg, ambos versionados e sem uso.
+  - Copiar as telas ao entregar: pnpm compare procura a pasta
+    teste-evolucoes-bedside/ ao lado do projeto, e o repositório Git fica só em
+    bedside-replica/. Sem essa pasta, o pnpm compare não funciona para quem
+    clonar.
+
+  O que ainda falta para a entrega do teste
+
+  O README.md do teste pede uma nova versão da tela, o PROPOSTA.md, um vídeo e o
+  registro do uso de IA. Esta réplica é só a base para isso.
+
+  As decisões de cada tela, a lista de rotas e estados e o conteúdo que não veio
+  das imagens estão em README.md (bedside-replica/README.md). As comparações
+  lado a lado ficam em compare/, com o resumo em compare/resultado.txt.
+
+❯ Preciso de dois componentes para compor a organização, um de column e outro
+  de row, na pasta ui
+  ⎿  Referenced file ../../Downloads/prompt-bedside-replica.md
+  ⎿  Read teste-evolucoes-bedside/README.md (30 lines)
+  ⎿  Read teste-evolucoes-bedside/telas/LEGENDAS.md (83 lines)
+  ⎿  Referenced file teste-evolucoes-bedside/dados-exemplo.json
+
+⏺ Compacted using a summary written while you were away · turn off with
+  "idleCompaction": false in settings.json
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ A pasta do projeto agora se chama bedside-osler, então vou trabalhar nela.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Column.tsx e Column.module.css já existem, vazios, então vou preenchê-los.
+  Antes, vejo se a sua alteração em PatientList já usa esses componentes.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Write(bedside-osler/src/components/ui/Column.tsx)
+  ⎿  Added 13 lines, removed 6 lines
+       1 -import { ArrowLeft } from 'lucide-react'                       
+       2 -import { Link } from 'react-router-dom'                        
+       1 +import type { CSSProperties, HTMLAttributes } from 'react'     
+       2  import s from './Column.module.css'
+       3  
+       5 -export function Column({ to }: { to: string }) {               
+       4 +type Props = HTMLAttributes<HTMLDivElement> & {                
+       5 +  gap?: CSSProperties['gap']                                   
+       6 +  align?: CSSProperties['alignItems']                          
+       7 +  justify?: CSSProperties['justifyContent']                    
+       8 +}                                                              
+       9 +                                                               
+      10 +export function Column({ gap, align, justify, className, style,
+         + ...rest }: Props) {                                           
+      11    return (
+       7 -    <div to={to} className={s.column} aria-label="Voltar">     
+       8 -      <ArrowLeft size={14} strokeWidth={2} aria-hidden />      
+       9 -    </div>                                                     
+      12 +    <div                                                       
+      13 +      className={`${s.column} ${className ?? ''}`}             
+      14 +      style={{ gap, alignItems: align, justifyContent: justify,
+         + ...style }}                                                   
+      15 +      {...rest}                                                
+      16 +    />                                                         
+      17    )
+      18  }
+
+⏺ Write(bedside-osler/src/components/ui/Column.module.css)
+  ⎿  Added 5 lines, removed 1 line
+      1 -.col                                                            
+      1   No newline at end of file
+      2 +.column {                                                       
+      3 +  display: flex;                                                
+      4 +  flex-direction: column;                                       
+      5 +  min-width: 0;                                                 
+      6 +}                                                               
+
+⏺ Write(bedside-osler/src/components/ui/Row.tsx)
+  ⎿  Wrote 19 lines to bedside-osler/src/components/ui/Row.tsx
+      1 import type { CSSProperties, HTMLAttributes } from 'react'
+      2 import s from './Row.module.css'
+      3
+      4 type Props = HTMLAttributes<HTMLDivElement> & {
+      5   gap?: CSSProperties['gap']
+      6   align?: CSSProperties['alignItems']
+      7   justify?: CSSProperties['justifyContent']
+      8   wrap?: boolean
+      9 }
+     … +10 lines (ctrl+o to expand)
+
+⏺ Write(bedside-osler/src/components/ui/Row.module.css)
+  ⎿  Wrote 5 lines to bedside-osler/src/components/ui/Row.module.css
+      1 .row {
+      2   display: flex;
+      3   flex-direction: row;
+      4   min-width: 0;
+      5 }
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Os novos componentes não geraram erro, mas o tsc acusou erros no BlockNote, e
+  essa checagem passava antes. Vou ver a causa.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O pnpm build também está quebrado, então preciso descobrir de onde isso veio.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Criei os dois componentes em src/components/ui: Column.tsx
+  (src/components/ui/Column.tsx) e Row.tsx (src/components/ui/Row.tsx), cada um
+  com seu CSS Module. O ESLint passou neles e o tsc não acusou nenhum erro
+  nesses arquivos, mas o pnpm build está falhando por outro motivo, descrito
+  abaixo. Ainda não usei os componentes em nenhuma tela, então não os vi
+  renderizados, e não fiz commit.
+
+  <Row gap={8} align="center" justify="space-between">
+    <Column gap={4}>…</Column>
+    <Button>Salvar</Button>
+  </Row>
+
+  - Props em comum: gap, align e justify, com os mesmos valores do CSS; número
+    em gap vira px.
+  - Só no Row: wrap, para permitir quebra de linha.
+  - Outros atributos: ambos renderizam uma div e aceitam className, style e os
+    demais atributos de div. O style passado tem prioridade sobre as props.
+  - min-width: 0: já vem nos dois, para o texto longo não estourar o layout
+    dentro de um flex.
+
+  Build quebrado
+
+  O tsc aponta 4 erros em schema.tsx e NoteEditor.tsx, mas o código do projeto
+  não é a causa. Um arquivo dentro de node_modules foi alterado:
+
+  node_modules/@blocknote/core/types/src/index.d.ts, linha 15
+  export * from ".pnpm/@blocknote+core@0.56.0_@types+hast@3.0.5/node_modules/@bl
+  ocknote/core/blocks";
+
+  Esse caminho não é o que o pacote publicaria, e o arquivo foi modificado às
+  22:55 de hoje. Isso parece um ajuste automático de imports do editor, talvez
+  ao renomear a pasta para bedside-osler, mas não confirmei.
+
+  Não mexi em node_modules. Reinstalar as dependências deve resolver, mas ainda
+  não testei:
+
+  rm -rf node_modules && pnpm install && pnpm build
+
+  Sua alteração em andamento no PatientList (width: 50% e o ícone
+  CircleUserRound) continua como estava.
+
+❯ <ide_opened_file>The user opened the file
+  /Users/pedrofarias/Documents/Osler/bedside-osler/src/components/ui/Column.tsx
+  in the IDE. This may or may not be related to the current
+  task.</ide_opened_file>
+
+❯ erro corrigido?
+
+⏺ Vou verificar agora.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Sim, o erro foi corrigido: o tsc não acusa mais nenhum erro e o pnpm build
+  passa. A linha 15 do arquivo do BlockNote voltou ao original (export * from
+  "./blocks/index.js"), o que confirma que a causa estava mesmo em node_modules.
+
+  O build ainda mostra o aviso de chunk acima de 500 kB, que já aparecia antes e
+  não impede a geração.
+
+❯ <ide_opened_file>The user opened the file
+  /Users/pedrofarias/Documents/Osler/bedside-osler/src/data/dados-exemplo.json
+  in the IDE. This may or may not be related to the current
+  task.</ide_opened_file>
+
+❯ me dê 5 status de saúde do paciente com gradação de cores entre verde e
+  vermelho, com os código hex de cada item da escala de cor
+
+⏺ ┌───────┬───────────────┬───────────────┬─────────┐
+  │ Nível │    Status     │      Cor      │   Hex   │
+  ├───────┼───────────────┼───────────────┼─────────┤
+  │ 1     │ Estável       │ Verde         │ #16A34A │
+  ├───────┼───────────────┼───────────────┼─────────┤
+  │ 2     │ Em observação │ Verde-limão   │ #84B816 │
+  ├───────┼───────────────┼───────────────┼─────────┤
+  │ 3     │ Atenção       │ Amarelo-âmbar │ #EAB308 │
+  ├───────┼───────────────┼───────────────┼─────────┤
+  │ 4     │ Grave         │ Laranja       │ #EA7317 │
+  ├───────┼───────────────┼───────────────┼─────────┤
+  │ 5     │ Crítico       │ Vermelho      │ #DC2626 │
+  └───────┴───────────────┴───────────────┴─────────┘
+
+  O verde é o mesmo --success-text que o projeto já usa.
+
+  Esses nomes são uma sugestão minha, não uma classificação clínica validada, e
+  o dados-exemplo.json não traz nenhum campo de status. Na interface, mostre
+  sempre o nome junto da cor, porque quem tem daltonismo pode não distinguir
+  verde, laranja e vermelho. Para texto sobre fundo branco, os níveis 2, 3 e 4
+  têm pouco contraste, então funcionam melhor como ponto ou faixa colorida ao
+  lado de um texto escuro.
+
+❯ Adicione isso nos tokens.
+  Adicione isso no json de dados-exemplos de maneira aleatória para cada
+  paciente.
+  Crie um enum que relacione Status com a cor
+
+  Ran 2 shell commands (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ <ide_selection>The user selected the lines 50 to 50 from
+  /Users/pedrofarias/Documents/Osler/bedside-osler/src/pages/PatientList.tsx:
+  CircleUserRound
+
+  This may or may not be related to the current task.</ide_selection>
+❯ Adicione isso nos tokens.
+  Adicione isso no json de dados-exemplos de maneira aleatória para cada
+  paciente.
+  Crie um enum que relacione Status com a cor
+  Isso será utilizado junto com o icon CircleUserRound
+  @bedside-osler/src/pages/PatientList.tsx
+  @bedside-osler/src/pages/PatientList.module.css
+
+⏺ A execução anterior foi interrompida e pode ter gravado parte das mudanças,
+  então confiro o estado atual antes de continuar.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Os dados, os tokens e os tipos já foram gravados. Falta aplicar a cor no
+  ícone.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Update(bedside-osler/src/pages/PatientList.tsx)
+  ⎿  Added 1 line, removed 1 line
+      21  import { SEX_LABEL, displayName, sectorLine } from '../lib/pati
+          ent'
+      22  import { api } from '../services/api'
+      23  import { SUMMARIES } from '../mocks/ai'
+      24 -import type { PatientListItem } from '../types'                
+      24 +import { HEALTH_STATUS_COLOR, type PatientListItem } from '../t
+         +ypes'                                                          
+      25  import btn from '../components/ui/Button.module.css'
+      26  import s from './PatientList.module.css'
+      27  import { Row } from '../components/ui/Row'
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O CircleUserRound do card agora aparece na cor do status de cada paciente.
+  tsc, build e ESLint passam, mas não abri a tela no navegador para ver o
+  resultado.
+
+  - Tokens: adicionei --status-estavel, --status-em-observacao,
+    --status-atencao, --status-grave e --status-critico em tokens.css
+    (src/styles/tokens.css).
+  - Enum: HealthStatus e o mapa HEALTH_STATUS_COLOR estão em types/index.ts
+    (src/types/index.ts). Usei um objeto as const em vez de enum, porque o
+    tsconfig tem erasableSyntaxOnly ligado e não aceita enum. O uso é igual:
+    HealthStatus.Critico.
+  - Ícone: a cor é aplicada em PatientList.tsx (src/pages/PatientList.tsx).
+    Paciente sem status fica com a cor padrão do texto, que é o caso de quem for
+    cadastrado por "Adicionar paciente", já que esse formulário não define
+    status.
+
+  O campo health_status entrou em dados-exemplo.json
+  (src/data/dados-exemplo.json), e cada paciente tem o mesmo valor em lista e em
+  evolucoes. O diff do arquivo só tem esse campo a mais. Ele foi sorteado na
+  execução interrompida, e mantive o resultado:
+
+  ┌─────────────────────┬───────────────┐
+  │      Paciente       │    Status     │
+  ├─────────────────────┼───────────────┤
+  │ helena              │ Estável       │
+  ├─────────────────────┼───────────────┤
+  │ jrs, luana, roberto │ Em observação │
+  ├─────────────────────┼───────────────┤
+  │ maria               │ Atenção       │
+  ├─────────────────────┼───────────────┤
+  │ antonio             │ Grave         │
+  ├─────────────────────┼───────────────┤
+  │ francisco           │ Crítico       │
+  └─────────────────────┴───────────────┘
+
+  Os valores dependem do sorteio, então não refletem o quadro clínico descrito
+  nas notas. Por exemplo, um paciente pode aparecer como "Crítico" com uma
+  evolução tranquila.
+
+  Pendências:
+  - Acessibilidade: o status só aparece pela cor, porque o ícone está com
+    aria-hidden e não há texto junto. Leitores de tela não recebem essa
+    informação, e quem tem daltonismo pode confundir os níveis.
+  - Comparação visual: o dados-exemplo.json não é mais idêntico ao original do
+    teste. Os ícones coloridos também não existem nas imagens, então o pnpm
+    compare da lista vai mostrar mais diferença, além da que já vem das suas
+    mudanças no card.
+
+❯ <ide_opened_file>The user opened the file
+  /Users/pedrofarias/Documents/Osler/bedside-osler/src/data/dados-exemplo.json
+  in the IDE. This may or may not be related to the current
+  task.</ide_opened_file>
+
+❯ Adicione isso nos tokens.
+  Adicione isso no json de dados-exemplos de maneira aleatória para cada
+  paciente.
+  Crie um enum que relacione Status com a cor
+  Isso será utilizado junto com o icon CircleUserRound
+  @bedside-osler/src/pages/PatientList.tsx
+  @bedside-osler/src/pages/PatientList.module.css
+  @bedside-osler/src/data/dados-exemplo.json
+
+⏺ Você reenviou o mesmo pedido, então vou conferir se as mudanças continuam nos
+  arquivos.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O campo saiu do JSON, enquanto o resto continua no lugar. Vou ver se o arquivo
+  tem outra alteração antes de gravar de novo.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O health_status tinha saído do dados-exemplo.json, provavelmente desfeito
+  depois da última alteração, e já o adicionei de novo. tsc e build passam, mas
+  ainda não abri a tela no navegador.
+
+  Como o sorteio foi refeito, os valores mudaram:
+
+  ┌─────────────────────────────┬───────────────┐
+  │          Paciente           │    Status     │
+  ├─────────────────────────────┼───────────────┤
+  │ antonio                     │ Em observação │
+  ├─────────────────────────────┼───────────────┤
+  │ francisco, luana            │ Grave         │
+  ├─────────────────────────────┼───────────────┤
+  │ maria, jrs, helena, roberto │ Crítico       │
+  └─────────────────────────────┴───────────────┘
+
+  O sorteio saiu desequilibrado: 4 dos 7 pacientes ficaram como "Crítico" e
+  nenhum como "Estável" ou "Atenção". Mantive assim porque você pediu aleatório.
+
+  Os tokens, o HealthStatus, o HEALTH_STATUS_COLOR e a cor no CircleUserRound
+  continuavam no lugar, então não mudei nada neles. Nenhuma dessas mudanças tem
+  commit, e o JSON só tem as 14 linhas novas de health_status, 7 em lista e 7 em
+  evolucoes.
+
+❯ <ide_selection>The user selected the lines 50 to 50 from
+  /Users/pedrofarias/Documents/Osler/bedside-osler/src/pages/PatientList.tsx:
+  CircleUserRound
+
+  This may or may not be related to the current task.</ide_selection>
+
+❯ Componente Avatar Recebendo o ícone CircleUserRound ou uma imagem. Matenha a
+  borda reagindo com a cor do status de saúde
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Criei o Avatar.tsx (src/components/ui/Avatar.tsx) e ele já substitui o ícone
+  no card da lista de pacientes. tsc, build e ESLint passam, mas não abri a tela
+  no navegador.
+
+  <Avatar status={p.health_status} />                          // ícone
+  CircleUserRound
+  <Avatar src="/foto.jpg" alt="Maria" status={p.health_status} /> // imagem
+
+  - Props: src, alt, status, size (padrão 100) e className.
+  - Com imagem: a foto fica recortada em círculo, com borda de 2px na cor do
+    status.
+  - Sem imagem: o próprio círculo do CircleUserRound faz o papel de borda e
+    assume a cor do status. Não adicionei outra borda em volta, para não
+    aparecerem dois anéis.
+  - Sem status: a borda fica na cor padrão do texto.
+
+  Os pacientes ainda não têm campo de foto no dados-exemplo.json, então a lista
+  sempre mostra o ícone e o caso com imagem ainda não foi exercitado em nenhuma
+  tela. O status também continua sendo indicado só pela cor, como antes. As
+  mudanças estão sem commit.
+
+❯ <ide_selection>The user selected the lines 119 to 143 from
+  /Users/pedrofarias/Documents/Osler/bedside-osler/src/pages/NewPatient.tsx:
+  <div className={`${s.field} ${s.sexField}`}>
+                  <label className={s.labelRow} id="sexo-label">
+                    <b>Sexo</b>
+                  </label>
+                  <Select.Root value={sex} onValueChange={(v) => setSex(v as
+  Sex)}>
+                    <Select.Trigger className={`${s.input} ${s.select}`}
+  aria-labelledby="sexo-label">
+                      <Select.Value placeholder="Selecione..." />
+                      <Select.Icon>
+                        <ChevronDown size={16} strokeWidth={1.5}
+  color="#6c6c6c" aria-hidden />
+                      </Select.Icon>
+                    </Select.Trigger>
+                    <Select.Portal>
+                      <Select.Content className={s.selectContent}
+  position="popper" sideOffset={4}>
+                        <Select.Viewport>
+                          <Select.Item value="F" className={s.selectItem}>
+                            <Select.ItemText>Feminino</Select.ItemText>
+                          </Select.Item>
+                          <Select.Item value="M" className={s.selectItem}>
+                            <Select.ItemText>Masculino</Select.ItemText>
+                          </Select.Item>
+                        </Select.Viewport>
+                      </Select.Content>
+                    </Select.Portal>
+                  </Select.Root>
+                </div>
+
+  This may or may not be related to the current task.</ide_selection>
+
+❯ Transforme esse select em um componente reutilizável.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Compila sem erros. Vou testar o select aberto no navegador, aproveitando o
+  servidor que subi, e encerrá-lo em seguida.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O teste não chegou a rodar, porque o comando timeout não existe neste Mac. Vou
+  repetir sem ele.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O select virou o componente Select.tsx (src/components/ui/Select.tsx), e a
+  tela NewPatient.tsx (src/pages/NewPatient.tsx) já usa ele. tsc, build e ESLint
+  passam. Testei no navegador, em desktop e celular: as opções abrem, a seleção
+  funciona, não há erro no console e tamanho, fonte e espaçamento são os mesmos
+  de antes.
+
+  <Select
+    value={sex}
+    onChange={setSex}
+    options={SEX_OPTIONS}
+    placeholder="Selecione..."
+    labelledBy="sexo-label"
+  />
+
+  - Tipagem: o tipo vem das opções, então onChange recebe Sex direto, sem o v as
+    Sex de antes.
+  - Props opcionais: value, placeholder, labelledBy e className; só onChange e
+    options são obrigatórias.
+  - Estilos: saíram de NewPatient.module.css e foram para Select.module.css,
+    incluindo o ajuste para celular. .input continua na tela porque os outros
+    campos usam.
+  - Rótulo: o <label> continua fora do componente. Passe o id dele em
+    labelledBy, senão o leitor de tela fica sem nome para o campo.
+
+  Nada disso tem commit. Vi que woman_1.png e woman_2.png estão em stage, junto
+  de parte das suas mudanças. Se usar git commit sem escolher arquivos, só o que
+  está em stage entra, e o Select novo fica de fora até você dar git add.
+
+[Image #1]
+
+❯ Baseado na página de evoluções, considere as seções(Evolução do dia, Sinais
+  vitais e as demais) como acordeons. Mantenha a mesma estrutura de ordem
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+⏺ Achei dois problemas: a seção recolhida reabria sozinha com o clique, porque o
+  cursor se movia, e faltava corrigir um tipo. Vou corrigir e testar de novo.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+⏺ As seções da evolução agora funcionam como acordeons, na mesma ordem de antes:
+  Evolução do dia, Sinais vitais, Exame físico, Exames complementares e
+  Conduta. Todas começam abertas, e cada uma vai do seu título até o título
+  seguinte.
+
+  O pnpm build está falhando por causa de um import sem uso em
+  src/pages/NewPatient.tsx (linha 7): você comentou o Segmented, mas o import
+  ficou. Não mexi nisso porque é uma alteração sua em andamento; basta remover o
+  import ou restaurar o Segmented. Esse é o único erro do tsc, e o ESLint passa
+  nos arquivos que alterei.
+
+  Testei no navegador, só no desktop, sem erros no console:
+  - Abrir e recolher: recolhi as 5 seções, a ordem se manteve e reabri cada uma
+    sem afetar as outras.
+  - Durante a escrita: digitar e o salvamento automático não reabrem as outras
+    seções.
+  - Nota finalizada: o acordeon também funciona na nota só de leitura.
+
+  Como funciona:
+  - Na nota em edição: só a seta à direita abre e fecha, porque o título
+    continua editável.
+  - Na nota finalizada: o título inteiro é clicável.
+  - O que é salvo: recolher só muda a tela. O documento continua igual, e o
+    "Copiar tudo" copia também as seções recolhidas. Ao recarregar a página,
+    todas voltam abertas.
+  - Cursor em seção recolhida: se o cursor chegar a uma seção recolhida (pelas
+    setas do teclado, por exemplo), ela abre sozinha, para ninguém digitar em
+    texto escondido. Inserir algo por uma ferramenta, como CID-10 ou
+    calculadora, também reabre a seção. Esses dois casos eu não testei.
+
+  A lógica está em collapsedSections.ts
+  (src/components/blocks/collapsedSections.ts), e usei em schema.tsx
+  (src/components/blocks/schema.tsx), NoteEditor.tsx
+  (src/components/editor/NoteEditor.tsx) e NoteReadOnly.tsx
+  (src/components/editor/NoteReadOnly.tsx). Não fiz commit.
+
+❯ <ide_opened_file>The user opened the file /Users/pedrofarias/Documents/Osler/
+  bedside-osler/src/components/blocks/collapsedSections.ts in the IDE. This may
+  or may not be related to the current task.</ide_opened_file>
+
+❯ Não utilize componente de classe
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Troquei a classe de collapsedSections.ts
+  (src/components/blocks/collapsedSections.ts) por uma função, createStore(), e
+  agora não há nenhuma classe em src. Quem usa o arquivo não precisou mudar.
+  Testei no navegador recolher e expandir uma seção: os blocos visíveis foram de
+  19 para 17 e voltaram para 19, sem erros no console.
+
+  O pnpm build continua falhando, agora com três imports sem uso, nenhum deles
+  deste ajuste:
+  - Segmented em src/pages/NewPatient.tsx (linha 7).
+  - CircleUserRound em src/pages/PatientList.tsx (linha 12).
+  - HEALTH_STATUS_COLOR em src/pages/PatientList.tsx (linha 25).
+
+  Os dois do PatientList apareceram depois de eu trocar o ícone pelo Avatar, e
+  esse arquivo mudou desde então. Não mexi neles porque você está editando esses
+  arquivos; para o build voltar a passar, basta remover os três imports ou
+  voltar a usá-los.
+
+❯ <ide_opened_file>The user opened the file /Users/pedrofarias/Documents/Osler/
+  bedside-osler/src/pages/Patients/PatientList.tsx in the IDE. This may or may
+  not be related to the current task.</ide_opened_file>
+  ⎿  [Image #2]
+❯ O que ocorreu?
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ O Vite não sabe resolver o alias @/. Por isso ele falha ao importar
+  @/components/ui/Avatar, na linha 15 do PatientList.tsx, mesmo com o arquivo
+  Avatar.tsx (src/components/ui/Avatar.tsx) existindo.
+
+  O alias foi adicionado só no tsconfig.app.json e no tsconfig.node.json, e essa
+  configuração só vale para o TypeScript: o editor não mostra erro, mas o Vite
+  não lê esses paths por padrão. Já o vite.config.ts não tem alias nenhum. Hoje,
+  22 arquivos em src importam com @/, então o erro não se limita a essa linha;
+  o Avatar é só o primeiro que ele encontrou.
+
+  Para corrigir, basta ligar a leitura do tsconfig no vite.config.ts, sem
+  instalar nada (opção nativa do Vite 8, que ainda não testei aqui):
+
+  export default defineConfig({
+    plugins: [react()],
+    resolve: { tsconfigPaths: true },
+  })
+
+  Depois, reinicie o pnpm dev, porque o Vite pode não aplicar a mudança com o
+  servidor rodando daquele jeito. Também pode valer rodar pnpm exec tsc -b,
+  porque você moveu as páginas para pages/Patients/ e isso pode ter deixado
+  algum import relativo errado.
+
+  Não alterei nada. Se quiser, aplico a correção e confirmo se o pnpm dev e o
+  build voltam a funcionar.
