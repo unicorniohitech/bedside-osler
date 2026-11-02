@@ -41,6 +41,9 @@ Além do que foi descrito na proposta simples:
 - Mantive as opções e o conteúdo das mesmas na mesma coluna, deixando mais espaço para o editor da evolução. Também possibilitou a adição de uma listagem de pacientes mais simplificada à esquerda, permitindo assim a execução das evoluções sempre a necessidade de mudança de telas com frequência.
 - Ajustei para que a cor primária utilizada fosse a dominante na própria logo do Bedside, mantendo mais coerência entre os elementos visuais.
 
+## Vídeo
+
+O vídeo está publicado no Youtube como "Não listado" - https://youtu.be/I2C57jnu9Xc
 
 ### Imgens com observações
 
@@ -51,3 +54,7 @@ Além do que foi descrito na proposta simples:
 ![alt text](proposalsImages/22-Finalizar.png)
 
 ![alt text](proposalsImages/27-Historico.png)
+
+### Dúvidas
+
+Em caso de dúvidas estarei à disposição para poder saná-las.
